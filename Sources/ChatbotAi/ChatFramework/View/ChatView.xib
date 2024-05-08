@@ -9,7 +9,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatView" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatView" customModuleProvider="target">
+            <connections>
+                <outlet property="messageTextContainerView" destination="m5V-dp-Na0" id="UR9-4q-2wo"/>
+                <outlet property="messageTextView" destination="c6U-I2-Tz6" id="whG-IC-mEz"/>
+                <outlet property="sendMessageBt" destination="bxn-MY-mY0" id="pdP-lj-0Cy"/>
+                <outlet property="tableView" destination="ZDf-YX-roa" id="lAP-HZ-LDL"/>
+                <outlet property="textHeight" destination="y7c-ae-Wqr" id="9Kj-Q8-8Mt"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -39,6 +47,9 @@
                                             <rect key="frame" x="359" y="0.0" width="23" height="34"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" image="dropDownIcon"/>
+                                            <connections>
+                                                <action selector="moreButton:" destination="-1" eventType="touchUpInside" id="hZ1-HY-e8j"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
@@ -80,6 +91,9 @@
                                     <rect key="frame" x="249" y="0.0" width="75" height="56"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" image="microphone"/>
+                                    <connections>
+                                        <action selector="recordButton:" destination="-1" eventType="touchUpInside" id="h0X-Cc-2fN"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bxn-MY-mY0">
                                     <rect key="frame" x="332" y="0.0" width="50" height="56"/>
@@ -88,7 +102,10 @@
                                     </constraints>
                                     <color key="tintColor" systemColor="systemBlueColor"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" image="Send"/>
+                                    <state key="normal" image="send"/>
+                                    <connections>
+                                        <action selector="sendMessageButton:" destination="-1" eventType="touchUpInside" id="Cy9-TJ-p39"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
@@ -126,9 +143,9 @@
     </objects>
     <resources>
         <image name="Arrow - Right" width="34" height="34"/>
-        <image name="Send" width="18" height="18"/>
         <image name="dropDownIcon" width="23" height="23"/>
         <image name="microphone" width="24" height="24"/>
+        <image name="send" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -18,7 +18,14 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ChatbotAi"),
+            name: "ChatbotAi",
+            resources: [
+                .copy("ChatFramework/View/ChatView.xib"),
+                .copy("ChatFramework/Cells/SenderText/SenderTextCell.xib"),
+                .copy("ChatFramework/Cells/ReceiverText/ReceiverTextCell.xib"),
+                .copy("ChatFramework/View/RecordView.xib")
+            ])
+        ,
         .testTarget(
             name: "ChatbotAiTests",
             dependencies: ["ChatbotAi"]),
