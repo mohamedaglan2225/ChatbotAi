@@ -15,7 +15,7 @@ public protocol ReusableViewDelegate: AnyObject {
     func didTapBackButton()
 }
 
-class ChatView: UIView {
+public class ChatView: UIView {
 
     //MARK: - IBOutLets -
     @IBOutlet weak var tableView: UITableView!
