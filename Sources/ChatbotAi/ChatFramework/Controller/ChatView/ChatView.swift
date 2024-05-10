@@ -80,7 +80,7 @@ public class ChatView: UIView {
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
-        fetchCoreDataMessages()
+//        fetchCoreDataMessages()
         registerCells()
         registerKeyboardNotifications()
         setupTapGesture()
