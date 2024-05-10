@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RoomsView: UIViewController {
+public class RoomsView: UIView {
 
     
     //MARK: - IBOutLets -
@@ -17,22 +17,30 @@ class RoomsView: UIViewController {
     
     
     //MARK: - Properties -
+    private let storage: MessagesStorage = {
+        DefaultMessageStorage(coreDataWrapper: ServiceLocator.storage)
+    }()
     
     
     
     //MARK: - LifeCycle Events -
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureInitialDesign()
-        
-    }
-
-    public init() {
-        super.init(nibName: "RoomsView", bundle: Bundle.module)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        let nib = UINib(nibName: "RoomsView", bundle: Bundle.module)
+        if let view = nib.instantiate(withOwner: self, options: nil).first as? UIView {
+            addSubview(view)
+            view.frame = bounds
+            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        }
     }
     
     
@@ -52,7 +60,11 @@ class RoomsView: UIViewController {
     
     //MARK: - IBActions -
     @objc private func newChatAction() {
-        
+        let chatViewTap = ChatView(frame: self.bounds)
+        let room = storage.getOrCreateRoom(with: "Room 2")
+        let roomId = Int(room.roomId)
+        chatViewTap.chatModel = self.storage.fetchMessages(roomId: roomId)
+        self.addSubview(chatViewTap)
     }
     
 

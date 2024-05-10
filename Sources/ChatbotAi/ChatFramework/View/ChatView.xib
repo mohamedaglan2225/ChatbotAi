@@ -20,7 +20,7 @@
                 <outlet property="previousChatStackView" destination="dAD-Mh-C5b" id="jMF-ip-2Bi"/>
                 <outlet property="sendMessageBt" destination="bxn-MY-mY0" id="pdP-lj-0Cy"/>
                 <outlet property="tableView" destination="ZDf-YX-roa" id="lAP-HZ-LDL"/>
-                <outlet property="textHeight" destination="y7c-ae-Wqr" id="9Kj-Q8-8Mt"/>
+                <outlet property="textHeight" destination="1NX-tK-J7e" id="g0P-om-wXd"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -77,16 +77,16 @@
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5V-dp-Na0">
-                    <rect key="frame" x="16" y="802" width="382" height="60"/>
+                    <rect key="frame" x="16" y="799" width="382" height="63"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dhq-4p-3On">
-                            <rect key="frame" x="16" y="2.5" width="350" height="55"/>
+                            <rect key="frame" x="16" y="4" width="350" height="55"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c6U-I2-Tz6">
                                     <rect key="frame" x="0.0" y="0.0" width="241" height="55"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="55" id="w9D-I7-4Rn"/>
+                                        <constraint firstAttribute="height" constant="55" id="1NX-tK-J7e"/>
                                     </constraints>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -117,15 +117,16 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="dhq-4p-3On" secondAttribute="bottom" constant="4" id="F6g-gK-96A"/>
                         <constraint firstItem="dhq-4p-3On" firstAttribute="centerY" secondItem="m5V-dp-Na0" secondAttribute="centerY" id="Pti-60-8t4"/>
                         <constraint firstItem="dhq-4p-3On" firstAttribute="centerX" secondItem="m5V-dp-Na0" secondAttribute="centerX" id="Sej-fQ-VQr"/>
                         <constraint firstItem="dhq-4p-3On" firstAttribute="leading" secondItem="m5V-dp-Na0" secondAttribute="leading" constant="16" id="TRU-uJ-s7R"/>
+                        <constraint firstItem="dhq-4p-3On" firstAttribute="top" secondItem="m5V-dp-Na0" secondAttribute="top" constant="4" id="cpk-gp-HwZ"/>
                         <constraint firstAttribute="trailing" secondItem="dhq-4p-3On" secondAttribute="trailing" constant="16" id="eV3-PM-K1s"/>
-                        <constraint firstAttribute="height" constant="60" id="y7c-ae-Wqr"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZDf-YX-roa">
-                    <rect key="frame" x="0.0" y="137" width="414" height="649"/>
+                    <rect key="frame" x="0.0" y="137" width="414" height="646"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8ZG-8p-985">

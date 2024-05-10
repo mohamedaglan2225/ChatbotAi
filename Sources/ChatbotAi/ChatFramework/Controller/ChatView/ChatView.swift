@@ -33,7 +33,7 @@ public class ChatView: UIView {
     //MARK: - Properties -
     let XIB_NAME = "ChatView"
     private var request = Networking()
-    private var chatModel: [Choice] = []
+    var chatModel: [Choice] = []
     
     public var apiKey: String?
     weak var delegate: ReusableViewDelegate?
@@ -177,16 +177,17 @@ public class ChatView: UIView {
     
     @objc private func gotToPreviousChatAction() {
         self.newChatsContainerStackView.isHidden = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            guard let self = self else {return}
-            if let parentVC = parentViewController {
-                let destinationViewController = RoomsView()
-                destinationViewController.modalPresentationStyle = .fullScreen
-                parentVC.present(destinationViewController, animated: true, completion: nil)
-            } else {
-                print("Parent view controller not found")
-            }
-        }
+        self.removeFromSuperview()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+//            guard let self = self else {return}
+//            if let parentVC = parentViewController {
+//                let destinationViewController = RoomsView()
+//                destinationViewController.modalPresentationStyle = .fullScreen
+//                parentVC.present(destinationViewController, animated: true, completion: nil)
+//            } else {
+//                print("Parent view controller not found")
+//            }
+//        }
     }
     
 }

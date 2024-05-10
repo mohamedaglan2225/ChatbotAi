@@ -11,7 +11,7 @@ import AVKit
 extension ChatView: UITextViewDelegate {
     
     public func textViewDidChange(_ textView: UITextView) {
-        if messageTextView.contentSize.height < 60 {
+        if messageTextView.contentSize.height < 100 {
             textHeight.constant = messageTextView.contentSize.height
         }
         if messageTextView.text == "" {

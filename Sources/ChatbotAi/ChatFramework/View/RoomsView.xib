@@ -13,7 +13,6 @@
             <connections>
                 <outlet property="newChatsView" destination="30F-fd-jRo" id="cur-4P-ElE"/>
                 <outlet property="tableView" destination="SBM-IS-bzQ" id="Ebi-fS-c19"/>
-                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
