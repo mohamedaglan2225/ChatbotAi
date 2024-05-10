@@ -31,7 +31,7 @@ public class DefaultMessageStorage: MessagesStorage {
     }
     
     public func fetchMessages(roomId: Int) -> [Choice] {
-        let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: NSPredicate(format: "room.roomId == %d", roomId))
+        let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: NSPredicate(format: "Room.roomId == %d", roomId))
         return objects.map {
             Choice(
                 message: ChatMessage(content: $0.content)
