@@ -27,11 +27,13 @@ public class RoomsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        configureInitialDesign()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
+        configureInitialDesign()
     }
     
     private func commonInit() {
