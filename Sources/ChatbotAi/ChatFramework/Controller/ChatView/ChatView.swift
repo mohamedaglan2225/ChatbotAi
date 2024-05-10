@@ -80,7 +80,7 @@ public class ChatView: UIView {
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
-//        fetchCoreDataMessages()
+        fetchCoreDataMessages()
         registerCells()
         registerKeyboardNotifications()
         setupTapGesture()
@@ -131,7 +131,12 @@ public class ChatView: UIView {
     }
     
     @IBAction func moreButton(_ sender: UIButton) {
-        newChatsContainerStackView.isHidden = false
+        sender.isSelected.toggle()
+        if sender.isSelected {
+            newChatsContainerStackView.isHidden = false
+        }else {
+            newChatsContainerStackView.isHidden = true
+        }
         //        if let parentVC = parentViewController {
         //            let destinationViewController = OldChattingView()
         //            parentVC.present(destinationViewController, animated: true, completion: nil)
