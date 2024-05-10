@@ -232,7 +232,7 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
 extension ChatView {
     
     private func sendTextMessage() {
-//        self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
+        self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
         
 //        self.storage.saveMessages(messageTextView.text, roomId)
         
