@@ -248,11 +248,11 @@ extension ChatView {
                         self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
                         self.storage.saveMessages(responseContent, self.roomId)
                     }
-                    self.tableView.reloadData()
-                    self.sendMessageBt.isHidden = true
-                    self.textHeight.constant = 40
-                    self.messageTextView.text = ""
-                    self.tableView.scrollToTop()
+//                    self.tableView.reloadData()
+//                    self.sendMessageBt.isHidden = true
+//                    self.textHeight.constant = 40
+//                    self.messageTextView.text = ""
+//                    self.tableView.scrollToTop()
                 case .failure(let failure):
                     print("Error: \(failure)")
                 }
