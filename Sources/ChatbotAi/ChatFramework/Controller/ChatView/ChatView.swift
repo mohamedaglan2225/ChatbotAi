@@ -32,7 +32,6 @@ public class ChatView: UIView {
     
     //MARK: - Properties -
     let XIB_NAME = "ChatView"
-    var roomId: Room?
     private var request = Networking()
     private var chatModel: [Choice] = [] {
         didSet {
@@ -43,7 +42,8 @@ public class ChatView: UIView {
     public var apiKey: String?
     weak var delegate: ReusableViewDelegate?
     let timestamp = Date()
-    var room: Room!
+    var roomId = 123
+    var roomName = "Default Room"
     
     private let storage: MessagesStorage = {
         DefaultMessageStorage(coreDataWrapper: ServiceLocator.storage)
@@ -81,7 +81,6 @@ public class ChatView: UIView {
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
-        storage.createRoom(roomId: 1, roomName: "New Room")
         fetchCoreDataMessages()
         registerCells()
         registerKeyboardNotifications()
@@ -125,7 +124,9 @@ public class ChatView: UIView {
     
     
     private func fetchCoreDataMessages() {
-        self.chatModel = self.storage.fetchMessages(roomId: Int(roomId?.roomId ?? 0))
+        let room = storage.getOrCreateRoom(with: roomName)
+        self.roomId = Int(room.roomId)
+        self.chatModel = self.storage.fetchMessages(roomId: roomId)
     }
     
     //MARK: - IBActions -
@@ -233,7 +234,7 @@ extension ChatView {
     private func sendTextMessage() {
         self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
         
-        self.storage.saveMessages(messageTextView.text, Int(roomId?.roomId ?? 0))
+        self.storage.saveMessages(messageTextView.text, roomId)
         
         request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
             guard let self = self else {return}
@@ -248,7 +249,7 @@ extension ChatView {
                     if let responseContent = success.choices?.first?.message?.content {
                         let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
                         self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
-                        self.storage.saveMessages(responseContent, Int(self.roomId?.roomId ?? 0))
+                        self.storage.saveMessages(responseContent, self.roomId)
                     }
                     self.tableView.reloadData()
                 case .failure(let failure):
