@@ -72,10 +72,10 @@
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5V-dp-Na0">
-                    <rect key="frame" x="0.0" y="782" width="414" height="80"/>
+                    <rect key="frame" x="16" y="802" width="382" height="60"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dhq-4p-3On">
-                            <rect key="frame" x="24" y="12.5" width="366" height="55"/>
+                            <rect key="frame" x="16" y="2.5" width="350" height="55"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter your message" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c6U-I2-Tz6">
                                     <rect key="frame" x="0.0" y="0.0" width="241" height="55"/>
@@ -88,7 +88,7 @@
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zmh-Kc-xek">
-                                    <rect key="frame" x="249" y="0.0" width="59" height="55"/>
+                                    <rect key="frame" x="249" y="0.0" width="43" height="55"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" image="microphone"/>
                                     <connections>
@@ -96,7 +96,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bxn-MY-mY0">
-                                    <rect key="frame" x="316" y="0.0" width="50" height="55"/>
+                                    <rect key="frame" x="300" y="0.0" width="50" height="55"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="wDH-0m-L13"/>
                                     </constraints>
@@ -108,20 +108,19 @@
                                     </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" red="0.3411764706" green="0.58431372550000005" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="tintColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="dhq-4p-3On" firstAttribute="centerY" secondItem="m5V-dp-Na0" secondAttribute="centerY" id="Pti-60-8t4"/>
                         <constraint firstItem="dhq-4p-3On" firstAttribute="centerX" secondItem="m5V-dp-Na0" secondAttribute="centerX" id="Sej-fQ-VQr"/>
-                        <constraint firstItem="dhq-4p-3On" firstAttribute="leading" secondItem="m5V-dp-Na0" secondAttribute="leading" constant="24" id="TRU-uJ-s7R"/>
-                        <constraint firstAttribute="trailing" secondItem="dhq-4p-3On" secondAttribute="trailing" constant="24" id="eV3-PM-K1s"/>
-                        <constraint firstAttribute="height" constant="80" id="y7c-ae-Wqr"/>
+                        <constraint firstItem="dhq-4p-3On" firstAttribute="leading" secondItem="m5V-dp-Na0" secondAttribute="leading" constant="16" id="TRU-uJ-s7R"/>
+                        <constraint firstAttribute="trailing" secondItem="dhq-4p-3On" secondAttribute="trailing" constant="16" id="eV3-PM-K1s"/>
+                        <constraint firstAttribute="height" constant="60" id="y7c-ae-Wqr"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZDf-YX-roa">
-                    <rect key="frame" x="0.0" y="136.5" width="414" height="629.5"/>
+                    <rect key="frame" x="0.0" y="136.5" width="414" height="649.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
             </subviews>
@@ -130,12 +129,12 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="UH7-s5-fRk" secondAttribute="trailing" id="4CR-uQ-hfc"/>
                 <constraint firstItem="ZDf-YX-roa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="69a-6h-CeX"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="m5V-dp-Na0" secondAttribute="trailing" id="GAv-za-s5p"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="m5V-dp-Na0" secondAttribute="trailing" constant="16" id="GAv-za-s5p"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="m5V-dp-Na0" secondAttribute="bottom" id="QzN-sJ-sWB"/>
                 <constraint firstItem="UH7-s5-fRk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="SdR-Ks-AfU"/>
                 <constraint firstItem="m5V-dp-Na0" firstAttribute="top" secondItem="ZDf-YX-roa" secondAttribute="bottom" constant="16" id="YE5-9w-Zmi"/>
                 <constraint firstItem="ZDf-YX-roa" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="bso-0i-oCs"/>
-                <constraint firstItem="m5V-dp-Na0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fPr-U0-zOY"/>
+                <constraint firstItem="m5V-dp-Na0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="fPr-U0-zOY"/>
                 <constraint firstItem="UH7-s5-fRk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tEU-Jf-wry"/>
                 <constraint firstItem="ZDf-YX-roa" firstAttribute="top" secondItem="UH7-s5-fRk" secondAttribute="bottom" constant="16" id="yAI-sN-X4N"/>
             </constraints>
@@ -151,9 +150,6 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="tintColor">
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>

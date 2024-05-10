@@ -79,8 +79,8 @@ public class ChatView: UIView {
         setupTapGesture()
         messageTextView.layer.borderColor = UIColor.lightGray.cgColor
         messageTextView.delegate = self
-        messageTextContainerView.layer.borderColor = UIColor.white.cgColor
-        messageTextContainerView.layer.cornerRadius = 14
+        messageTextContainerView.layer.borderColor = UIColor(resource: .main).cgColor
+        messageTextContainerView.layer.cornerRadius = 24
         messageTextContainerView.layer.borderWidth = 0.5
         messageTextContainerView.layer.backgroundColor = UIColor.clear.cgColor
     }
