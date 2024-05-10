@@ -77,7 +77,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dhq-4p-3On">
                             <rect key="frame" x="16" y="2.5" width="350" height="55"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter your message" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c6U-I2-Tz6">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c6U-I2-Tz6">
                                     <rect key="frame" x="0.0" y="0.0" width="241" height="55"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>

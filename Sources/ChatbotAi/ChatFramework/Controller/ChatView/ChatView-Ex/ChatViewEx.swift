@@ -15,8 +15,10 @@ extension ChatView: UITextViewDelegate {
             textHeight.constant = messageTextView.contentSize.height
         }
         if messageTextView.text == "" {
+            sendMessageBt.isHidden = true
             messageTextContainerView.layer.borderColor = UIColor.white.cgColor
         }else {
+            sendMessageBt.isHidden = false
             messageTextContainerView.layer.borderColor = UIColor.blue.cgColor
         }
     }

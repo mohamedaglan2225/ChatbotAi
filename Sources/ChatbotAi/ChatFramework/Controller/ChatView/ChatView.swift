@@ -26,8 +26,6 @@ public class ChatView: UIView {
     
     
     
-    
-    
     //MARK: - Properties -
     let XIB_NAME = "ChatView"
     private var request = Networking()
@@ -78,6 +76,7 @@ public class ChatView: UIView {
         registerCells()
         setupTapGesture()
         messageTextView.layer.borderColor = UIColor.lightGray.cgColor
+        messageTextView.text = "Enter message"
         messageTextView.delegate = self
         messageTextContainerView.layer.borderColor = UIColor(resource: .main).cgColor
         messageTextContainerView.layer.cornerRadius = 24
