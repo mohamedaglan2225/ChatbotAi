@@ -26,7 +26,7 @@ public class DefaultMessageStorage: MessagesStorage {
     public func saveMessages(_ messages: String, _ roomId: Int){
         let object = coreDataWrapper.createObject(ofType: MessageModel.self)
         object.content = messages
-//        object.room.roomId = Int64(roomId)
+        object.room.roomId = Int64(roomId)
         coreDataWrapper.saveContext()
     }
     
