@@ -178,11 +178,15 @@ public class ChatView: UIView {
     
     
     @objc private func gotToPreviousChatAction() {
-        if let parentVC = parentViewController {
-            let destinationViewController = RoomsView()
-            parentVC.present(destinationViewController, animated: true, completion: nil)
-        } else {
-            print("Parent view controller not found")
+        self.newChatsContainerStackView.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            guard let self = self else {return}
+            if let parentVC = parentViewController {
+                let destinationViewController = RoomsView()
+                parentVC.present(destinationViewController, animated: true, completion: nil)
+            } else {
+                print("Parent view controller not found")
+            }
         }
     }
     
