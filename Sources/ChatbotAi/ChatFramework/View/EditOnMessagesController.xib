@@ -15,7 +15,6 @@
                 <outlet property="professionalStackView" destination="087-4c-sqR" id="iIe-sa-R79"/>
                 <outlet property="shortMessageStackView" destination="nhA-Iu-4le" id="Zev-Ur-86F"/>
                 <outlet property="unofficialStackView" destination="qZ1-Bv-nnS" id="jMs-9m-JLu"/>
-                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

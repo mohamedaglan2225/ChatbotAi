@@ -96,11 +96,7 @@ public class ChatView: UIView {
     
     
     private func fetchCoreDataMessages() {
-        do {
-            self.chatModel = self.storage.fetchMessages()
-        }catch {
-            fatalError("Catched Error")
-        }
+        self.chatModel = self.storage.fetchMessages()
     }
     
     
