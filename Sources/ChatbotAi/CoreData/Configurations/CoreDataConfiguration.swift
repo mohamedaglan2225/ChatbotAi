@@ -39,7 +39,7 @@ public final class CoreDataWrapper: CoreDataWrapping {
     private let persistentContainer: NSPersistentContainer
 
     public init(modelName: String) {
-        guard let modelURL = Bundle.module.url(forResource: modelName, withExtension: "xcdatamodeld"),
+        guard let modelURL = Bundle.module.url(forResource: modelName, withExtension: "momd"),
               let model = NSManagedObjectModel(contentsOf: modelURL) else {
             fatalError("Unable to create model with name: \(modelName) in module bundle")
         }
