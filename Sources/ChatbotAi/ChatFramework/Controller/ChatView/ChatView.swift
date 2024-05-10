@@ -74,7 +74,7 @@ public class ChatView: UIView {
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
-//        fetchCoreDataMessages()
+        fetchCoreDataMessages()
         registerCells()
 //        messageTextView.layer.borderColor = UIColor.lightGray.cgColor
 //        messageTextView.delegate = self
