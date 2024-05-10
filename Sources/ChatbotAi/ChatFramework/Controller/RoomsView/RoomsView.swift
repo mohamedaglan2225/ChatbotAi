@@ -15,7 +15,7 @@ class RoomsView: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
+    
     public init() {
         super.init(nibName: "RoomsView", bundle: Bundle.module)
     }

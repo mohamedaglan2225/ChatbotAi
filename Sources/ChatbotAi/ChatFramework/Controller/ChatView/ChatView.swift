@@ -183,6 +183,7 @@ public class ChatView: UIView {
             guard let self = self else {return}
             if let parentVC = parentViewController {
                 let destinationViewController = RoomsView()
+                destinationViewController.modalPresentationStyle = .fullScreen
                 parentVC.present(destinationViewController, animated: true, completion: nil)
             } else {
                 print("Parent view controller not found")
