@@ -18,6 +18,7 @@ public protocol ReusableViewDelegate: AnyObject {
 public class ChatView: UIView {
 
     //MARK: - IBOutLets -
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var messageTextContainerView: UIView!
@@ -71,12 +72,12 @@ public class ChatView: UIView {
     
     
     deinit {
-            NotificationCenter.default.removeObserver(self)
-        }
+        NotificationCenter.default.removeObserver(self)
+    }
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
-//        fetchCoreDataMessages()
+        //        fetchCoreDataMessages()
         registerCells()
         registerKeyboardNotifications()
         setupTapGesture()
@@ -139,19 +140,20 @@ public class ChatView: UIView {
     
     
     @objc func keyboardWillShow(notification: NSNotification) {
-          if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-              if self.frame.origin.y == 0 {
-                  let adjustmentHeight = keyboardSize.height - self.safeAreaInsets.bottom
-                  self.frame.origin.y -= adjustmentHeight
-              }
-          }
-      }
-      
-      @objc func keyboardWillHide(notification: NSNotification) {
-          if self.frame.origin.y != 0 {
-              self.frame.origin.y = 0
-          }
-      }
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.3) {
+                self.bottomConstraint.constant = keyboardSize.height - self.safeAreaInsets.bottom
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.3) {
+            self.bottomConstraint.constant = 0
+            self.layoutIfNeeded()
+        }
+    }
     
 }
 

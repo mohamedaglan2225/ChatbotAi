@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatView" customModuleProvider="target">
             <connections>
+                <outlet property="bottomConstraint" destination="QzN-sJ-sWB" id="BSA-zX-PNc"/>
                 <outlet property="messageTextContainerView" destination="m5V-dp-Na0" id="UR9-4q-2wo"/>
                 <outlet property="messageTextView" destination="c6U-I2-Tz6" id="whG-IC-mEz"/>
                 <outlet property="sendMessageBt" destination="bxn-MY-mY0" id="pdP-lj-0Cy"/>
