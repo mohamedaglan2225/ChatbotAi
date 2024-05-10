@@ -33,11 +33,7 @@ public class ChatView: UIView {
     //MARK: - Properties -
     let XIB_NAME = "ChatView"
     private var request = Networking()
-    private var chatModel: [Choice] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    private var chatModel: [Choice] = []
     
     public var apiKey: String?
     weak var delegate: ReusableViewDelegate?
@@ -127,6 +123,7 @@ public class ChatView: UIView {
         let room = storage.getOrCreateRoom(with: roomName)
         self.roomId = Int(room.roomId)
         self.chatModel = self.storage.fetchMessages(roomId: roomId)
+        tableView.reloadData()
     }
     
     //MARK: - IBActions -
@@ -232,35 +229,35 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
 extension ChatView {
     
     private func sendTextMessage() {
-//        self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
+        self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
         
         self.storage.saveMessages(messageTextView.text, roomId)
         
-//        request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
-//            guard let self = self else {return}
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let success):
-//                    print("Response ID: \(success.id ?? "")")
-//                    print("Response Model: \(success.model ?? "")")
-//                    print("Response Content Message: \(success.choices?.first?.message?.content ?? "")")
-//                    
-//                    // Handle the response from ChatGPT
-//                    if let responseContent = success.choices?.first?.message?.content {
-//                        let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
-//                        self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
-//                        self.storage.saveMessages(responseContent, self.roomId)
-//                    }
-//                    self.tableView.reloadData()
-//                    self.sendMessageBt.isHidden = true
-//                    self.textHeight.constant = 40
-//                    self.messageTextView.text = ""
-//                    self.tableView.scrollToTop()
-//                case .failure(let failure):
-//                    print("Error: \(failure)")
-//                }
-//            }
-//        }
+        request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
+                    print("Response ID: \(success.id ?? "")")
+                    print("Response Model: \(success.model ?? "")")
+                    print("Response Content Message: \(success.choices?.first?.message?.content ?? "")")
+                    
+                    // Handle the response from ChatGPT
+                    if let responseContent = success.choices?.first?.message?.content {
+                        let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
+                        self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
+                        self.storage.saveMessages(responseContent, self.roomId)
+                    }
+                    self.tableView.reloadData()
+                    self.sendMessageBt.isHidden = true
+                    self.textHeight.constant = 40
+                    self.messageTextView.text = ""
+                    self.tableView.scrollToTop()
+                case .failure(let failure):
+                    print("Error: \(failure)")
+                }
+            }
+        }
     }
     
     private func sendRecord(_ sender: UIButton) {
