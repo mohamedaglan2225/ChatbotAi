@@ -90,10 +90,10 @@ public class ChatView: UIView {
         messageTextView.layer.borderColor = UIColor.lightGray.cgColor
         messageTextView.text = "Enter message"
         messageTextView.delegate = self
-        messageTextContainerView.layer.borderColor = UIColor(resource: .main).cgColor
+//        messageTextContainerView.layer.borderColor = UIColor(resource: .main).cgColor
         messageTextContainerView.layer.cornerRadius = 24
         messageTextContainerView.layer.borderWidth = 0.5
-        messageTextContainerView.layer.backgroundColor = UIColor.clear.cgColor
+//        messageTextContainerView.layer.backgroundColor = UIColor.clear.cgColor
     }
     
     private func setupTapGesture() {
