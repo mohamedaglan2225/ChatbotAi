@@ -162,7 +162,6 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-
 //MARK: - Handle Actions -
 extension ChatView {
     
