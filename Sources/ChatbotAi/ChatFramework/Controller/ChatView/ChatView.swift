@@ -76,6 +76,7 @@ public class ChatView: UIView {
     private func configureInitialDesign() {
 //        fetchCoreDataMessages()
         registerCells()
+        setupTapGesture()
         messageTextView.layer.borderColor = UIColor.lightGray.cgColor
         messageTextView.delegate = self
         messageTextContainerView.layer.borderColor = UIColor.white.cgColor
@@ -84,6 +85,10 @@ public class ChatView: UIView {
         messageTextContainerView.layer.backgroundColor = UIColor.clear.cgColor
     }
     
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.addGestureRecognizer(tapGesture)
+    }
     
     private func registerCells() {
         tableView.register(.init(nibName: "SenderTextCell", bundle: Bundle.module),forCellReuseIdentifier: "SenderTextCell")
@@ -111,15 +116,17 @@ public class ChatView: UIView {
     }
     
     @IBAction func moreButton(_ sender: UIButton) {
-//        if let parentVC = parentViewController {
-//            let destinationViewController = OldChattingView()
-//            parentVC.present(destinationViewController, animated: true, completion: nil)
-//        } else {
-//            print("Parent view controller not found")
-//        }
+        //        if let parentVC = parentViewController {
+        //            let destinationViewController = OldChattingView()
+        //            parentVC.present(destinationViewController, animated: true, completion: nil)
+        //        } else {
+        //            print("Parent view controller not found")
+        //        }
     }
     
-    
+    @objc private func dismissKeyboard() {
+        self.endEditing(true)
+    }
     
 }
 
