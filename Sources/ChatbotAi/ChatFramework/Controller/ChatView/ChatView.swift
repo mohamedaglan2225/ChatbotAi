@@ -74,14 +74,14 @@ public class ChatView: UIView {
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
-        fetchCoreDataMessages()
+//        fetchCoreDataMessages()
         registerCells()
-//        messageTextView.layer.borderColor = UIColor.lightGray.cgColor
-//        messageTextView.delegate = self
-//        messageTextContainerView.layer.borderColor = UIColor.white.cgColor
-//        messageTextContainerView.layer.cornerRadius = 14
-//        messageTextContainerView.layer.borderWidth = 0.5
-//        messageTextContainerView.layer.backgroundColor = UIColor.clear.cgColor
+        messageTextView.layer.borderColor = UIColor.lightGray.cgColor
+        messageTextView.delegate = self
+        messageTextContainerView.layer.borderColor = UIColor.white.cgColor
+        messageTextContainerView.layer.cornerRadius = 14
+        messageTextContainerView.layer.borderWidth = 0.5
+        messageTextContainerView.layer.backgroundColor = UIColor.clear.cgColor
     }
     
     
