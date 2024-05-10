@@ -32,6 +32,7 @@ public class ChatView: UIView {
     
     //MARK: - Properties -
     let XIB_NAME = "ChatView"
+    var roomId: Room?
     private var request = Networking()
     private var chatModel: [Choice] = [] {
         didSet {
@@ -80,6 +81,7 @@ public class ChatView: UIView {
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
+        storage.createRoom(roomId: 1, roomName: "New Room")
         fetchCoreDataMessages()
         registerCells()
         registerKeyboardNotifications()
@@ -123,10 +125,8 @@ public class ChatView: UIView {
     
     
     private func fetchCoreDataMessages() {
-        self.chatModel = self.storage.fetchMessages()
+        self.chatModel = self.storage.fetchMessages(roomId: Int(roomId?.roomId ?? 0))
     }
-    
-    
     
     //MARK: - IBActions -
     @IBAction func sendMessageButton(_ sender: UIButton) {
@@ -233,7 +233,7 @@ extension ChatView {
     private func sendTextMessage() {
         self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
         
-        self.storage.saveMessages(messageTextView.text)
+        self.storage.saveMessages(messageTextView.text, Int(roomId?.roomId ?? 0))
         
         request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
             guard let self = self else {return}
@@ -248,7 +248,7 @@ extension ChatView {
                     if let responseContent = success.choices?.first?.message?.content {
                         let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
                         self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
-                        self.storage.saveMessages(responseContent)
+                        self.storage.saveMessages(responseContent, Int(self.roomId?.roomId ?? 0))
                     }
                     self.tableView.reloadData()
                 case .failure(let failure):

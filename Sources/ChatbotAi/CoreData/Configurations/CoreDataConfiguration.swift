@@ -20,6 +20,8 @@ public protocol CoreDataWrapping {
     func fetchObjects<T: Object>(ofType type: T.Type,
                                  predicate: NSPredicate?,
                                  sortDescriptors: [NSSortDescriptor]?) -> [T]
+    func createRoom<T: Object>(ofType type: T.Type) -> T
+    
 }
 
 
@@ -81,6 +83,11 @@ public final class CoreDataWrapper: CoreDataWrapping {
             print("Fetch error: \(error)")
             return []
         }
+    }
+    
+    
+    public func createRoom<T: Object>(ofType type: T.Type) -> T {
+        return T(context: persistentContainer.viewContext)
     }
     
 }
