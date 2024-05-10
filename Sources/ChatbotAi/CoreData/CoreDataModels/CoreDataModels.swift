@@ -23,7 +23,7 @@ public final class MessageModel: NSManagedObject, Object {
 @objc(Room)
 public final class Room: NSManagedObject, Object {
     @NSManaged public var name: String
-    @NSManaged public var messages: NSSet?
+    @NSManaged public var messages: Set<MessageModel>?
     @NSManaged public var roomId: Int64
 
     public static func fetchRequest() -> NSFetchRequest<Room> {
