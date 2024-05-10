@@ -96,8 +96,16 @@ public class ChatView: UIView {
     }
     
     private func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        self.addGestureRecognizer(tapGesture)
+        let tapGestureKeyboard = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.addGestureRecognizer(tapGestureKeyboard)
+        
+        let tapGestureNewChat = UITapGestureRecognizer(target: self, action: #selector(newChatAction))
+        newChatStackView.addGestureRecognizer(tapGestureNewChat)
+        
+        
+        let tapGesturePreviousChat = UITapGestureRecognizer(target: self, action: #selector(gotToPreviousChatAction))
+        previousChatStackView.addGestureRecognizer(tapGesturePreviousChat)
+        
     }
     
     private func registerCells() {
@@ -132,17 +140,14 @@ public class ChatView: UIView {
     
     @IBAction func moreButton(_ sender: UIButton) {
         sender.isSelected.toggle()
-        if sender.isSelected {
-            newChatsContainerStackView.isHidden = false
-        }else {
-            newChatsContainerStackView.isHidden = true
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self = self else {return}
+            if sender.isSelected {
+                self.newChatsContainerStackView.isHidden = false
+            }else {
+                self.newChatsContainerStackView.isHidden = true
+            }
         }
-        //        if let parentVC = parentViewController {
-        //            let destinationViewController = OldChattingView()
-        //            parentVC.present(destinationViewController, animated: true, completion: nil)
-        //        } else {
-        //            print("Parent view controller not found")
-        //        }
     }
     
     @objc private func dismissKeyboard() {
@@ -163,6 +168,21 @@ public class ChatView: UIView {
         UIView.animate(withDuration: 0.3) {
             self.bottomConstraint.constant = 0
             self.layoutIfNeeded()
+        }
+    }
+    
+    
+    @objc private func newChatAction() {
+        
+    }
+    
+    
+    @objc private func gotToPreviousChatAction() {
+        if let parentVC = parentViewController {
+            let destinationViewController = RoomsView()
+            parentVC.present(destinationViewController, animated: true, completion: nil)
+        } else {
+            print("Parent view controller not found")
         }
     }
     

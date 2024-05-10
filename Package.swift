@@ -24,7 +24,6 @@ let package = Package(
                 .copy("ChatFramework/Cells/SenderText/SenderTextCell.xib"),
                 .copy("ChatFramework/Cells/ReceiverText/ReceiverTextCell.xib"),
                 .copy("ChatFramework/View/RecordView.xib")
-//                .process("Resources/ChatbotAi.xcdatamodeld")
             ])
         ,
         .testTarget(
