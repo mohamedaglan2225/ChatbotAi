@@ -90,10 +90,10 @@ public class ChatView: UIView {
         messageTextView.layer.borderColor = UIColor.lightGray.cgColor
         messageTextView.text = "Enter message"
         messageTextView.delegate = self
-//        messageTextContainerView.layer.borderColor = UIColor(resource: .main).cgColor
+        messageTextContainerView.layer.borderColor = UIColor(resource: .main).cgColor
         messageTextContainerView.layer.cornerRadius = 24
         messageTextContainerView.layer.borderWidth = 0.5
-//        messageTextContainerView.layer.backgroundColor = UIColor.clear.cgColor
+        messageTextContainerView.layer.backgroundColor = UIColor.clear.cgColor
     }
     
     private func setupTapGesture() {
@@ -252,16 +252,15 @@ extension ChatView {
                         self.storage.saveMessages(responseContent, self.roomId)
                     }
                     self.tableView.reloadData()
+                    self.sendMessageBt.isHidden = true
+                    self.textHeight.constant = 40
+                    self.messageTextView.text = ""
+                    self.tableView.scrollToTop()
                 case .failure(let failure):
                     print("Error: \(failure)")
                 }
             }
         }
-        
-        sendMessageBt.isHidden = true
-        textHeight.constant = 40
-        messageTextView.text = ""
-        tableView.scrollToTop()
     }
     
     private func sendRecord(_ sender: UIButton) {
