@@ -81,6 +81,7 @@ public class ChatView: UIView {
         registerCells()
         registerKeyboardNotifications()
         setupTapGesture()
+        sendMessageBt.isHidden = true
         messageTextView.layer.borderColor = UIColor.lightGray.cgColor
         messageTextView.text = "Enter message"
         messageTextView.delegate = self
@@ -221,6 +222,7 @@ extension ChatView {
             }
         }
         
+        sendMessageBt.isHidden = true
         textHeight.constant = 40
         messageTextView.text = ""
         tableView.scrollToTop()
