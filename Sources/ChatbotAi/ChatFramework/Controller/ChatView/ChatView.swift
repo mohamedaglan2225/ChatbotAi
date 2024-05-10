@@ -24,6 +24,9 @@ public class ChatView: UIView {
     @IBOutlet weak var messageTextContainerView: UIView!
     @IBOutlet weak var textHeight: NSLayoutConstraint!
     @IBOutlet weak var sendMessageBt: UIButton!
+    @IBOutlet weak var newChatsContainerStackView: UIStackView!
+    @IBOutlet weak var newChatStackView: UIStackView!
+    @IBOutlet weak var previousChatStackView: UIStackView!
     
     
     
@@ -77,10 +80,11 @@ public class ChatView: UIView {
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
-        //        fetchCoreDataMessages()
+        fetchCoreDataMessages()
         registerCells()
         registerKeyboardNotifications()
         setupTapGesture()
+        newChatsContainerStackView.isHidden = true
         sendMessageBt.isHidden = true
         messageTextView.layer.borderColor = UIColor.lightGray.cgColor
         messageTextView.text = "Enter message"
@@ -127,6 +131,7 @@ public class ChatView: UIView {
     }
     
     @IBAction func moreButton(_ sender: UIButton) {
+        newChatsContainerStackView.isHidden = false
         //        if let parentVC = parentViewController {
         //            let destinationViewController = OldChattingView()
         //            parentVC.present(destinationViewController, animated: true, completion: nil)
