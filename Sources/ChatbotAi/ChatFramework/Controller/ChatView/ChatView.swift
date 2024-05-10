@@ -70,10 +70,15 @@ public class ChatView: UIView {
     }
     
     
+    deinit {
+            NotificationCenter.default.removeObserver(self)
+        }
+    
     //MARK: - Configure UI -
     private func configureInitialDesign() {
 //        fetchCoreDataMessages()
         registerCells()
+        registerKeyboardNotifications()
         setupTapGesture()
         messageTextView.layer.borderColor = UIColor.lightGray.cgColor
         messageTextView.text = "Enter message"
@@ -96,6 +101,11 @@ public class ChatView: UIView {
         tableView.dataSource = self
         tableView.separatorStyle = .none
     }
+    
+    func registerKeyboardNotifications() {
+           NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+           NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+       }
     
     
     private func fetchCoreDataMessages() {
@@ -126,6 +136,22 @@ public class ChatView: UIView {
     @objc private func dismissKeyboard() {
         self.endEditing(true)
     }
+    
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+          if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+              if self.frame.origin.y == 0 {
+                  let adjustmentHeight = keyboardSize.height - self.safeAreaInsets.bottom
+                  self.frame.origin.y -= adjustmentHeight
+              }
+          }
+      }
+      
+      @objc func keyboardWillHide(notification: NSNotification) {
+          if self.frame.origin.y != 0 {
+              self.frame.origin.y = 0
+          }
+      }
     
 }
 
