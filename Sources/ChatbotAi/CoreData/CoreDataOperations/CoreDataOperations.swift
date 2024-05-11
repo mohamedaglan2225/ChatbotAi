@@ -10,7 +10,7 @@ import Foundation
 public protocol MessagesStorage {
     func fetchMessages(roomId: Int) -> [Choice]
     func saveMessages(_ messages: String, _ roomId: Int)
-    func getOrCreateRoom(with roomName: String) -> Room
+    func getOrCreateRoom(with roomName: String, forceNew: Bool) -> Room
 }
 
 
@@ -48,12 +48,11 @@ public class DefaultMessageStorage: MessagesStorage {
     }
     
     
-    public func getOrCreateRoom(with roomName: String) -> Room {
-        
+    public func getOrCreateRoom(with roomName: String, forceNew: Bool = false) -> Room {
         let predicate = NSPredicate(format: "name == %@", roomName)
         let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
         
-        if let existingRoom = rooms.first {
+        if !forceNew, let existingRoom = rooms.first {
             return existingRoom
         } else {
             let newRoom = coreDataWrapper.createRoom(ofType: Room.self)
@@ -62,13 +61,12 @@ public class DefaultMessageStorage: MessagesStorage {
             coreDataWrapper.saveContext()
             return newRoom
         }
-        
     }
     
     
     private func generateRoomId() -> Int64 {
 //        return Int64(Date().timeIntervalSince1970)  // Generates a unique ID based on the current timestamp
-        return Int64.random(in: 1...1000)
+        return Int64(Date().timeIntervalSince1970 * 1000)
     }
     
     
