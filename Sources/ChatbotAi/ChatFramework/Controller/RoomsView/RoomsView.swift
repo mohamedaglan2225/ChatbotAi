@@ -63,9 +63,10 @@ public class RoomsView: UIView {
     //MARK: - IBActions -
     @objc private func newChatAction() {
         let chatViewTap = ChatView(frame: self.bounds)
-        let room = storage.getOrCreateRoom(with: "Room 2")
-        let roomId = Int(room.roomId)
-        chatViewTap.chatModel = self.storage.fetchMessages(roomId: roomId)
+        let newRoom = storage.getOrCreateRoom(with: "Room 2")
+//        let roomId = Int(room.roomId)
+//        chatViewTap.chatModel = self.storage.fetchMessages(roomId: roomId)
+        print("Room created with name: \(newRoom.name) and ID: \(newRoom.roomId)")
         self.addSubview(chatViewTap)
     }
     
