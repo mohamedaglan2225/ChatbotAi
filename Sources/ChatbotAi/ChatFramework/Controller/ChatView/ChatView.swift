@@ -120,7 +120,7 @@ public class ChatView: UIView {
     
     
     private func fetchCoreDataMessages() {
-        let room = storage.getOrCreateRoom(with: roomName, forceNew: true)
+        let room = storage.getOrCreateRoom(with: Int64(roomId))
         self.roomId = Int(room.roomId)
         self.chatModel = self.storage.fetchMessages(roomId: roomId)
         tableView.reloadData()

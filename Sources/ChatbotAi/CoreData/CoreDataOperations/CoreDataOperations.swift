@@ -10,7 +10,7 @@ import Foundation
 public protocol MessagesStorage {
     func fetchMessages(roomId: Int) -> [Choice]
     func saveMessages(_ messages: String, _ roomId: Int)
-    func getOrCreateRoom(with roomName: String, forceNew: Bool) -> Room
+    func getOrCreateRoom(with rooId: Int64) -> Room
     func fetchRooms() -> [Room]
 }
 
@@ -25,7 +25,7 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func saveMessages(_ messages: String, _ roomId: Int){
-        let roomPredicate = NSPredicate(format: "roomId == %d", roomId)
+        let roomPredicate = NSPredicate(format: "roomId = %d", roomId)
         if let room = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: roomPredicate).first {
             let object = coreDataWrapper.createObject(ofType: MessageModel.self)
             object.content = messages
@@ -39,7 +39,7 @@ public class DefaultMessageStorage: MessagesStorage {
     
     public func fetchMessages(roomId: Int) -> [Choice] {
         let int64RoomId = Int64(roomId)
-        let predicate = NSPredicate(format: "room.roomId == %d", int64RoomId)
+        let predicate = NSPredicate(format: "room.roomId = %d", int64RoomId)
         let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: predicate)
         return objects.map {
             Choice(
@@ -49,16 +49,16 @@ public class DefaultMessageStorage: MessagesStorage {
     }
     
     
-    public func getOrCreateRoom(with roomName: String, forceNew: Bool = false) -> Room {
-        let predicate = NSPredicate(format: "name == %@", roomName)
+    public func getOrCreateRoom(with roomId: Int64) -> Room {
+        let predicate = NSPredicate(format: "room.roomId = %d", roomId)
         let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
         
-        if !forceNew, let existingRoom = rooms.first {
+        if let existingRoom = rooms.first {
             return existingRoom
         } else {
             let newRoom = coreDataWrapper.createRoom(ofType: Room.self)
             newRoom.roomId = generateRoomId()
-            newRoom.name = roomName
+//            newRoom.name = roomName
             coreDataWrapper.saveContext()
             return newRoom
         }
