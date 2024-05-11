@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum ServiceLocator {
+public enum ServiceLocator {
     static let storage: CoreDataWrapping = CoreDataWrapper(modelName: "ChatBotAI")
 }

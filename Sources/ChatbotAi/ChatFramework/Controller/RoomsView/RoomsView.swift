@@ -72,10 +72,10 @@ public class RoomsView: UIView {
     
     
     private func registerTableView() {
-        tableView.register(.init(nibName: "RoomsCell", bundle: Bundle.module),forCellReuseIdentifier: "RoomsCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
+//        tableView.register(.init(nibName: "RoomsCell", bundle: Bundle.module),forCellReuseIdentifier: "RoomsCell")
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.separatorStyle = .none
     }
     
     
@@ -94,17 +94,17 @@ public class RoomsView: UIView {
 
 
 //MARK: - TableView -
-extension RoomsView: UITableViewDataSource, UITableViewDelegate {
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rooms.count
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "RoomsCell", for: indexPath) as? RoomsCell {
-//            cell.configureCell(room: rooms[indexPath.row])
-            return cell
-        }
-        return UITableViewCell()
-    }
-}
+//extension RoomsView: UITableViewDataSource, UITableViewDelegate {
+//    
+//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return rooms.count
+//    }
+//    
+//    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        if let cell = tableView.dequeueReusableCell(withIdentifier: "RoomsCell", for: indexPath) as? RoomsCell {
+////            cell.configureCell(room: rooms[indexPath.row])
+//            return cell
+//        }
+//        return UITableViewCell()
+//    }
+//}
