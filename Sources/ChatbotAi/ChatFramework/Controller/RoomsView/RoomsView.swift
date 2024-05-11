@@ -21,7 +21,11 @@ public class RoomsView: UIView {
         DefaultMessageStorage(coreDataWrapper: ServiceLocator.storage)
     }()
     
-    var rooms: [Room] = []
+    var rooms: [Room] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     
     //MARK: - LifeCycle Events -
@@ -66,6 +70,14 @@ public class RoomsView: UIView {
     
     
     
+    private func registerTableView() {
+        tableView.register(.init(nibName: "RoomsCell", bundle: Bundle.module),forCellReuseIdentifier: "RoomsCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+    }
+    
+    
     //MARK: - IBActions -
     @objc private func newChatAction() {
         let chatViewTap = ChatView(frame: self.bounds)
@@ -79,3 +91,19 @@ public class RoomsView: UIView {
 
 }
 
+
+//MARK: - TableView -
+extension RoomsView: UITableViewDataSource, UITableViewDelegate {
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return rooms.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "RoomsCell", for: indexPath) as? RoomsCell {
+            cell.roomName.text = rooms[indexPath.row].name
+            return cell
+        }
+        return UITableViewCell()
+    }
+}
