@@ -39,7 +39,7 @@ public class DefaultMessageStorage: MessagesStorage {
     public func fetchMessages(roomId: Int) -> [Choice] {
         let int64RoomId = Int64(roomId)
         let predicate = NSPredicate(format: "room.roomId == %d", int64RoomId)
-        let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self)
+        let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: predicate)
         return objects.map {
             Choice(
                 message: ChatMessage(content: $0.content)
@@ -67,7 +67,8 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     private func generateRoomId() -> Int64 {
-        return Int64(Date().timeIntervalSince1970)  // Generates a unique ID based on the current timestamp
+//        return Int64(Date().timeIntervalSince1970)  // Generates a unique ID based on the current timestamp
+        return Int64.random(in: 1...1000)
     }
     
     
