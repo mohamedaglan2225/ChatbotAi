@@ -8,5 +8,5 @@
 import Foundation
 
 public enum ServiceLocator {
-    static let storage: CoreDataWrapping = CoreDataWrapper(modelName: "ChatBotAI")
+    public static let storage: CoreDataWrapping = CoreDataWrapper(modelName: "ChatBotAI")
 }
