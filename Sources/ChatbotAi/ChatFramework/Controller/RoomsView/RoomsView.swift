@@ -55,6 +55,7 @@ public class RoomsView: UIView {
     
     //MARK: - Configure Design -
     private func configureInitialDesign() {
+        registerTableView()
         newChatsView.layer.cornerRadius = 16
         
         let newChatTap = UITapGestureRecognizer(target: self, action: #selector(newChatAction))
