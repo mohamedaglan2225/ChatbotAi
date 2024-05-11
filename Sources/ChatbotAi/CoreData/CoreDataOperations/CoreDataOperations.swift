@@ -11,6 +11,7 @@ public protocol MessagesStorage {
     func fetchMessages(roomId: Int) -> [Choice]
     func saveMessages(_ messages: String, _ roomId: Int)
     func getOrCreateRoom(with roomName: String, forceNew: Bool) -> Room
+    func fetchRooms() -> [Room]
 }
 
 
@@ -67,6 +68,12 @@ public class DefaultMessageStorage: MessagesStorage {
     private func generateRoomId() -> Int64 {
 //        return Int64(Date().timeIntervalSince1970)  // Generates a unique ID based on the current timestamp
         return Int64(Date().timeIntervalSince1970 * 1000)
+    }
+    
+    
+    public func fetchRooms() -> [Room] {
+        let objects = coreDataWrapper.fetchObjects(ofType: Room.self)
+        return objects
     }
     
     

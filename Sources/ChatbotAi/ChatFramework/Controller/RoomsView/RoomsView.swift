@@ -21,6 +21,7 @@ public class RoomsView: UIView {
         DefaultMessageStorage(coreDataWrapper: ServiceLocator.storage)
     }()
     
+    var rooms: [Room] = []
     
     
     //MARK: - LifeCycle Events -
@@ -34,6 +35,7 @@ public class RoomsView: UIView {
         super.init(coder: aDecoder)
         commonInit()
         configureInitialDesign()
+        fetchRooms()
     }
     
     private func commonInit() {
@@ -57,6 +59,10 @@ public class RoomsView: UIView {
     }
     
     
+    private func fetchRooms() {
+        self.rooms = self.storage.fetchRooms()
+        print(rooms.count)
+    }
     
     
     
