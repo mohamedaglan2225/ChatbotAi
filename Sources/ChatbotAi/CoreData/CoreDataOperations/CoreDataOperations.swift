@@ -24,17 +24,11 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func saveMessages(_ messages: String, _ roomId: Int){
-        let roomPredicate = NSPredicate(format: "roomId == %d", roomId)
-        if let room = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: roomPredicate).first {
-            let object = coreDataWrapper.createObject(ofType: MessageModel.self)
-            object.content = messages
-            object.room = room
-            coreDataWrapper.saveContext()
-        }else {
-            print("Room not found for given roomId")
-        }
+        let object = coreDataWrapper.createObject(ofType: MessageModel.self)
+        object.content = messages
+        object.room.roomId = Int64(roomId)
+        coreDataWrapper.saveContext()
     }
-    
     
     public func fetchMessages(roomId: Int) -> [Choice] {
         let int64RoomId = Int64(roomId)
