@@ -102,7 +102,7 @@ extension RoomsView: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "RoomsCell", for: indexPath) as? RoomsCell {
-            cell.roomName.text = rooms[indexPath.row].name
+            cell.configureCell(room: rooms[indexPath.row])
             return cell
         }
         return UITableViewCell()
