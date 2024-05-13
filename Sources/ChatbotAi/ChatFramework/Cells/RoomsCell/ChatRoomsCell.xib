@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,7 +48,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" name="AppGray"/>
+                        <color key="backgroundColor" red="0.20784313725490197" green="0.2196078431372549" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="lTH-03-Lm9" firstAttribute="leading" secondItem="Ckw-Ef-gUj" secondAttribute="leading" constant="8" id="7xG-PC-zhw"/>
                             <constraint firstItem="lTH-03-Lm9" firstAttribute="centerY" secondItem="Ckw-Ef-gUj" secondAttribute="centerY" id="bq2-Vh-nGy"/>
@@ -77,8 +76,5 @@
     <resources>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="message-text" width="24" height="24"/>
-        <namedColor name="AppGray">
-            <color red="0.20784313725490197" green="0.2196078431372549" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
     </resources>
 </document>

@@ -67,6 +67,7 @@ public class RoomsView: UIView {
     
     private func fetchRooms() {
         print("All Rooms are here \(storage.fetchRooms())")
+        rooms = storage.fetchRooms()
     }
     
     
@@ -95,12 +96,12 @@ public class RoomsView: UIView {
 extension RoomsView: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return rooms.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ChatRoomsCell", for: indexPath) as? ChatRoomsCell {
-//            cell.configureCell(model: chatModel[indexPath.row])
+            cell.chatRoomName.text = "\(rooms[indexPath.row].roomId)"
             return cell
         }
         return UITableViewCell()
