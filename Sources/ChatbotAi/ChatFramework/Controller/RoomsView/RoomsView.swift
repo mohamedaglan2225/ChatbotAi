@@ -111,4 +111,11 @@ extension RoomsView: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
+    
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chatViewTap = ChatView(frame: self.bounds)
+        chatViewTap.roomId = Int(rooms[indexPath.row].roomId)
+        self.addSubview(chatViewTap)
+    }
 }
