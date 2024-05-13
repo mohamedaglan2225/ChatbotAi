@@ -106,4 +106,8 @@ extension RoomsView: UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell()
     }
     
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
 }
