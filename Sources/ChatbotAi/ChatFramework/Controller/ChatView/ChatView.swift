@@ -38,7 +38,7 @@ public class ChatView: UIView {
     public var apiKey: String?
     weak var delegate: ReusableViewDelegate?
     let timestamp = Date()
-    var roomId = 123
+    var roomId: Int?
     var roomName = "Default Room"
     
     private let storage: MessagesStorage = {
@@ -120,7 +120,8 @@ public class ChatView: UIView {
     
     
     private func fetchCoreDataMessages() {
-        chatModel = self.storage.fetchMessages(roomId: roomId)
+        guard let id = roomId else {return}
+        chatModel = self.storage.fetchMessages(roomId: 1)
         tableView.reloadData()
     }
     
@@ -230,7 +231,8 @@ extension ChatView {
     private func sendTextMessage() {
         self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
         
-        self.storage.saveMessages(messageTextView.text, roomId)
+        guard let id = roomId else {return}
+        self.storage.saveMessages(messageTextView.text, 1)
         
         request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
             guard let self = self else {return}
@@ -245,7 +247,7 @@ extension ChatView {
                     if let responseContent = success.choices?.first?.message?.content {
                         let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
                         self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
-                        self.storage.saveMessages(responseContent, self.roomId)
+                        self.storage.saveMessages(responseContent, 1)
                     }
                     self.tableView.reloadData()
                     self.sendMessageBt.isHidden = true
