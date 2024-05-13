@@ -9,7 +9,7 @@ import UIKit
 
 class RoomsCell: UITableViewCell {
 
-    @IBOutlet weak var roomName: UILabel!
+//    @IBOutlet weak var roomName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,7 +17,7 @@ class RoomsCell: UITableViewCell {
     }
 
   
-    func configureCell(room: Room) {
-        roomName.text = room.name
-    }
+//    func configureCell(room: Room) {
+//        roomName.text = room.name
+//    }
 }
