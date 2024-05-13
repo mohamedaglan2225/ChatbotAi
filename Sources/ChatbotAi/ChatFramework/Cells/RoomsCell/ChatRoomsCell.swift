@@ -10,16 +10,15 @@ import UIKit
 class ChatRoomsCell: UITableViewCell {
 
     @IBOutlet weak var chatRoomName: UILabel!
+    @IBOutlet weak var containerView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        containerView.layer.cornerRadius = 8
+        containerView.layer.borderWidth = 0.3
+        containerView.layer.borderColor = UIColor.white.cgColor
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+   
     
 }

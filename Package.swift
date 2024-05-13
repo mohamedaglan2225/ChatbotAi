@@ -23,9 +23,7 @@ let package = Package(
                 .copy("ChatFramework/View/ChatView.xib"),
                 .copy("ChatFramework/Cells/SenderText/SenderTextCell.xib"),
                 .copy("ChatFramework/Cells/ReceiverText/ReceiverTextCell.xib"),
-//                .copy("ChatFramework/Cells/ChatRoomsCell/ChatRoomsCell.xib"),
                 .copy("ChatFramework/Cells/RoomsCell/ChatRoomsCell.xib"),
-                
                 .copy("ChatFramework/View/RecordView.xib"),
                 .copy("ChatFramework/View/RoomsView.xib"),
             ])
