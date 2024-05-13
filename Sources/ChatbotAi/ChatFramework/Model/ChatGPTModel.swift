@@ -22,6 +22,7 @@ public struct ChatGPTModel: Decodable {
     }
 }
 
+
 public struct Choice: Decodable {
     var index: Int?
     var message: ChatMessage?

@@ -25,16 +25,14 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func saveMessages(_ messages: String, _ roomId: Int){
-        let roomPredicate = NSPredicate(format: "roomId = %d", roomId)
-        if let room = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: roomPredicate).first {
-            let object = coreDataWrapper.createObject(ofType: MessageModel.self)
-            object.content = messages
-            object.room = room
-            coreDataWrapper.saveContext()
-        }else {
-            print("Room not found for given roomId")
-        }
+        let room = getOrCreateRoom(with: Int64(roomId))
+        let object = coreDataWrapper.createObject(ofType: MessageModel.self)
+        object.content = messages
+        object.room = room
+        object.timestamp = Date()
+        coreDataWrapper.saveContext()
     }
+    
     
     
     public func fetchMessages(roomId: Int) -> [Choice] {
@@ -50,31 +48,29 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func getOrCreateRoom(with roomId: Int64) -> Room {
-        let predicate = NSPredicate(format: "room.roomId = %d", roomId)
+        let predicate = NSPredicate(format: "roomId = %d", roomId)
         let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
         
         if let existingRoom = rooms.first {
             return existingRoom
         } else {
             let newRoom = coreDataWrapper.createRoom(ofType: Room.self)
-            newRoom.roomId = generateRoomId()
-//            newRoom.name = roomName
+            newRoom.roomId = roomId
             coreDataWrapper.saveContext()
             return newRoom
         }
     }
     
-    
-    private func generateRoomId() -> Int64 {
-//        return Int64(Date().timeIntervalSince1970)  // Generates a unique ID based on the current timestamp
-        return Int64(Date().timeIntervalSince1970 * 1000)
-    }
-    
-    
     public func fetchRooms() -> [Room] {
         let objects = coreDataWrapper.fetchObjects(ofType: Room.self)
         return objects
     }
+    
+    
+    private func generateRoomId() -> Int64 {
+        return Int64(Date().timeIntervalSince1970 * 1000)
+    }
+  
     
     
 }

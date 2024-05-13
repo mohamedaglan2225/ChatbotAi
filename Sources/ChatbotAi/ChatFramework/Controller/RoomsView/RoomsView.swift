@@ -21,6 +21,7 @@ public class RoomsView: UIView {
         DefaultMessageStorage(coreDataWrapper: ServiceLocator.storage)
     }()
     
+    
     var rooms: [Room] = [] {
         didSet {
             tableView.reloadData()
@@ -65,8 +66,7 @@ public class RoomsView: UIView {
     
     
     private func fetchRooms() {
-        self.rooms = self.storage.fetchRooms()
-        print(rooms.count)
+        print("All Rooms are here \(storage.fetchRooms())")
     }
     
     
