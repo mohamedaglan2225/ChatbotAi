@@ -120,7 +120,7 @@ public class ChatView: UIView {
     
     
     private func fetchCoreDataMessages() {
-        guard let id = roomId else {return}
+//        guard let id = roomId else {return}
         chatModel = self.storage.fetchMessages(roomId: 1)
         tableView.reloadData()
     }
@@ -231,7 +231,7 @@ extension ChatView {
     private func sendTextMessage() {
         self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
         
-        guard let id = roomId else {return}
+//        guard let id = roomId else {return}
         self.storage.saveMessages(messageTextView.text, 1)
         
         request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
