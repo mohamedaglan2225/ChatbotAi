@@ -72,7 +72,7 @@ public class RoomsView: UIView {
     
     
     private func registerTableView() {
-        tableView.register(.init(nibName: "ReceiverTextCell", bundle: Bundle.module),forCellReuseIdentifier: "ReceiverTextCell")
+        tableView.register(.init(nibName: "RoomsCell", bundle: Bundle.module),forCellReuseIdentifier: "RoomsCell")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
@@ -99,7 +99,7 @@ extension RoomsView: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ReceiverTextCell", for: indexPath) as? ReceiverTextCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "RoomsCell", for: indexPath) as? RoomsCell {
 //            cell.configureCell(model: chatModel[indexPath.row])
             return cell
         }
