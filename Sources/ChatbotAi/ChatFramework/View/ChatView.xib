@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatView" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatView">
             <connections>
                 <outlet property="bottomConstraint" destination="rKb-O3-HJz" id="7w5-qQ-pEF"/>
                 <outlet property="messageTextContainerView" destination="2NJ-V6-elV" id="goM-UG-AVA"/>
@@ -19,7 +19,6 @@
                 <outlet property="newChatsContainerStackView" destination="3uO-0e-NNU" id="mpf-on-R1B"/>
                 <outlet property="previousChatStackView" destination="fAS-C7-XnQ" id="ubL-DH-sdX"/>
                 <outlet property="sendMessageBt" destination="0rO-6k-0eC" id="GYx-qf-mTE"/>
-                <outlet property="tableView" destination="PSe-0g-P33" id="tzn-Ai-NLD"/>
                 <outlet property="textHeight" destination="i0f-3S-I6i" id="tUg-8w-5g5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
