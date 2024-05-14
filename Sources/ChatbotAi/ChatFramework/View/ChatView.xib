@@ -21,6 +21,7 @@
                 <outlet property="sendMessageBt" destination="bxn-MY-mY0" id="pdP-lj-0Cy"/>
                 <outlet property="tableView" destination="ZDf-YX-roa" id="lAP-HZ-LDL"/>
                 <outlet property="textHeight" destination="1NX-tK-J7e" id="g0P-om-wXd"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="GOv-j4-RZ5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
