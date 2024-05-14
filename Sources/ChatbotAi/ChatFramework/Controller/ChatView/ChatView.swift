@@ -2,7 +2,7 @@
 //  ChatView.swift
 //  
 //
-//  Created by Mohamed Aglan on 5/8/24.
+//  Created by Mohamed Aglan on 5/14/24.
 //
 
 import UIKit
@@ -10,13 +10,13 @@ import MobileCoreServices
 import AVKit
 import CoreData
 
-
 public protocol ReusableViewDelegate: AnyObject {
     func didTapBackButton()
 }
 
-public class ChatView: UIViewController {
-
+class ChatView: UIViewController {
+    
+    
     //MARK: - IBOutLets -
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
@@ -27,6 +27,7 @@ public class ChatView: UIViewController {
     @IBOutlet weak var newChatsContainerStackView: UIStackView!
     @IBOutlet weak var newChatStackView: UIStackView!
     @IBOutlet weak var previousChatStackView: UIStackView!
+    
     
     
     
@@ -53,31 +54,12 @@ public class ChatView: UIViewController {
         super.viewDidLoad()
         configureInitialDesign()
     }
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        commonInit()
-//        configureInitialDesign()
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        commonInit()
-//        configureInitialDesign()
-//    }
-//    
-//    private func commonInit() {
-//        let nib = UINib(nibName: XIB_NAME, bundle: Bundle.module)
-//        if let view = nib.instantiate(withOwner: self, options: nil).first as? UIView {
-//            addSubview(view)
-//            view.frame = bounds
-//            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        }
-//    }
-    
+
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
     
     //MARK: - Configure UI -
     private func configureInitialDesign() {
@@ -129,7 +111,8 @@ public class ChatView: UIViewController {
         tableView.reloadData()
     }
     
-    //MARK: - IBActions -
+
+  
     @IBAction func sendMessageButton(_ sender: UIButton) {
         sendTextMessage()
     }
@@ -138,6 +121,7 @@ public class ChatView: UIViewController {
     @IBAction func recordButton(_ sender: UIButton) {
         sendRecord(sender)
     }
+    
     
     @IBAction func moreButton(_ sender: UIButton) {
         sender.isSelected.toggle()
@@ -151,9 +135,15 @@ public class ChatView: UIViewController {
         }
     }
     
+    
+    @IBAction func backButton(_ sender: UIButton) {
+        
+    }
+    
     @objc private func dismissKeyboard() {
         self.view.endEditing(true)
     }
+    
     
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -193,8 +183,8 @@ public class ChatView: UIViewController {
 //        }
     }
     
+    
 }
-
 
 //MARK: - TableView Delegate & DataSource -
 extension ChatView: UITableViewDataSource, UITableViewDelegate {
