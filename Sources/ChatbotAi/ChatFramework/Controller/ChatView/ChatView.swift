@@ -108,7 +108,7 @@ class ChatView: UIViewController {
     private func fetchCoreDataMessages() {
 //        guard let id = roomId else {return}
         chatModel = self.storage.fetchMessages(roomId: 1)
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
 
