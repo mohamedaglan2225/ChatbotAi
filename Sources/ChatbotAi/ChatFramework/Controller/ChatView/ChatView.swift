@@ -15,7 +15,7 @@ public protocol ReusableViewDelegate: AnyObject {
     func didTapBackButton()
 }
 
-public class ChatView: UIView {
+public class ChatView: UIViewController {
 
     //MARK: - IBOutLets -
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -49,26 +49,30 @@ public class ChatView: UIView {
     
     
     //MARK: - LifeCycle Events -
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
+    public override func viewDidLoad() {
+        super.viewDidLoad()
         configureInitialDesign()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-        configureInitialDesign()
-    }
-    
-    private func commonInit() {
-        let nib = UINib(nibName: XIB_NAME, bundle: Bundle.module)
-        if let view = nib.instantiate(withOwner: self, options: nil).first as? UIView {
-            addSubview(view)
-            view.frame = bounds
-            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        }
-    }
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        commonInit()
+//        configureInitialDesign()
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        commonInit()
+//        configureInitialDesign()
+//    }
+//    
+//    private func commonInit() {
+//        let nib = UINib(nibName: XIB_NAME, bundle: Bundle.module)
+//        if let view = nib.instantiate(withOwner: self, options: nil).first as? UIView {
+//            addSubview(view)
+//            view.frame = bounds
+//            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        }
+//    }
     
     
     deinit {
@@ -94,7 +98,7 @@ public class ChatView: UIView {
     
     private func setupTapGesture() {
         let tapGestureKeyboard = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        self.addGestureRecognizer(tapGestureKeyboard)
+        self.view.addGestureRecognizer(tapGestureKeyboard)
         
         let tapGestureNewChat = UITapGestureRecognizer(target: self, action: #selector(newChatAction))
         newChatStackView.addGestureRecognizer(tapGestureNewChat)
@@ -148,15 +152,15 @@ public class ChatView: UIView {
     }
     
     @objc private func dismissKeyboard() {
-        self.endEditing(true)
+        self.view.endEditing(true)
     }
     
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             UIView.animate(withDuration: 0.3) {
-                self.bottomConstraint.constant = keyboardSize.height - self.safeAreaInsets.bottom
-                self.layoutIfNeeded()
+                self.bottomConstraint.constant = keyboardSize.height - self.view.safeAreaInsets.bottom
+                self.view.layoutIfNeeded()
             }
         }
     }
@@ -164,7 +168,7 @@ public class ChatView: UIView {
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.3) {
             self.bottomConstraint.constant = 0
-            self.layoutIfNeeded()
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -176,7 +180,7 @@ public class ChatView: UIView {
     
     @objc private func gotToPreviousChatAction() {
         self.newChatsContainerStackView.isHidden = true
-        self.removeFromSuperview()
+        self.view.removeFromSuperview()
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
 //            guard let self = self else {return}
 //            if let parentVC = parentViewController {
@@ -210,13 +214,13 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
                 receiverCell.configureCell(model: chatModel[indexPath.row])
                 receiverCell.dropDownMenueClosure = { [weak self] in
                     guard let self = self else {return}
-                    if let parentVC = parentViewController {
-                        let destinationViewController = EditOnMessagesController()
-                        destinationViewController.delegate = self
-                        parentVC.present(destinationViewController, animated: true, completion: nil)
-                    } else {
-                        print("Parent view controller not found")
-                    }
+//                    if let parentVC = parentViewController {
+//                        let destinationViewController = EditOnMessagesController()
+//                        destinationViewController.delegate = self
+//                        parentVC.present(destinationViewController, animated: true, completion: nil)
+//                    } else {
+//                        print("Parent view controller not found")
+//                    }
                 }
                 return receiverCell
             }
@@ -277,11 +281,11 @@ extension ChatView {
                             popOverPresentaion.sourceView = sender
                             popOverPresentaion.sourceRect = sender.bounds
                             popOverPresentaion.delegate = self
-                            if let parentVC = parentViewController {
-                                parentVC.present(popOver, animated: true, completion: nil)
-                            } else {
-                                print("Parent view controller not found")
-                            }
+//                            if let parentVC = parentViewController {
+//                                parentVC.present(popOver, animated: true, completion: nil)
+//                            } else {
+//                                print("Parent view controller not found")
+//                            }
                         }
                         break
                         
@@ -302,11 +306,11 @@ extension ChatView {
                         let cancelAction = UIAlertAction(title: "cancel", style: .default, handler: nil)
                         alert.addAction(settingsAction)
                         alert.addAction(cancelAction)
-                        if let parentVC = parentViewController {
-                            parentVC.present(alert, animated: true, completion: nil)
-                        } else {
-                            print("Parent view controller not found")
-                        }
+//                        if let parentVC = parentViewController {
+//                            parentVC.present(alert, animated: true, completion: nil)
+//                        } else {
+//                            print("Parent view controller not found")
+//                        }
                     }
                     
                 }else {

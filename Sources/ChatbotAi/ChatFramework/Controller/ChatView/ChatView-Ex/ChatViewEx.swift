@@ -157,11 +157,11 @@ extension ChatView {
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alert.addAction(settingsAction)
         alert.addAction(cancelAction)
-        if let parentVC = parentViewController {
-            parentVC.present(parentVC, animated: true, completion: nil)
-        } else {
-            print("Parent view controller not found")
-        }
+//        if let parentVC = parentViewController {
+//            parentVC.present(parentVC, animated: true, completion: nil)
+//        } else {
+//            print("Parent view controller not found")
+//        }
     }
 }
 
