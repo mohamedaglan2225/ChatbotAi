@@ -19,6 +19,7 @@
                 <outlet property="newChatsContainerStackView" destination="3uO-0e-NNU" id="mpf-on-R1B"/>
                 <outlet property="previousChatStackView" destination="fAS-C7-XnQ" id="ubL-DH-sdX"/>
                 <outlet property="sendMessageBt" destination="0rO-6k-0eC" id="GYx-qf-mTE"/>
+                <outlet property="tableView" destination="PSe-0g-P33" id="p08-H5-r2O"/>
                 <outlet property="textHeight" destination="i0f-3S-I6i" id="tUg-8w-5g5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

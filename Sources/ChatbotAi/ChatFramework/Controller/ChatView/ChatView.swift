@@ -19,7 +19,6 @@ class ChatView: UIViewController {
     
     //MARK: - IBOutLets -
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var messageTextContainerView: UIView!
     @IBOutlet weak var textHeight: NSLayoutConstraint!
@@ -27,6 +26,7 @@ class ChatView: UIViewController {
     @IBOutlet weak var newChatsContainerStackView: UIStackView!
     @IBOutlet weak var newChatStackView: UIStackView!
     @IBOutlet weak var previousChatStackView: UIStackView!
+    @IBOutlet weak var tableView: UITableView!
     
     
     
