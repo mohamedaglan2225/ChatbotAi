@@ -30,8 +30,16 @@ public class DefaultMessageStorage: MessagesStorage {
         object.content = messages
         object.room = room
         object.timestamp = Date()
+        
+        if var messagesSet = room.messages {
+            messagesSet.insert(object)
+            room.messages = messagesSet
+        }else {
+            room.messages = [object]
+        }
         coreDataWrapper.saveContext()
     }
+    
     
     
     
