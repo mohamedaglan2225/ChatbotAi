@@ -203,7 +203,7 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
             if let receiverCell = tableView.dequeueReusableCell(withIdentifier: "ReceiverTextCell", for: indexPath) as? ReceiverTextCell {
                 receiverCell.configureCell(model: chatModel[indexPath.row])
                 receiverCell.dropDownMenueClosure = { [weak self] in
-                    guard let self = self else {return}
+                    guard let _ = self else {return}
 //                    if let parentVC = parentViewController {
 //                        let destinationViewController = EditOnMessagesController()
 //                        destinationViewController.delegate = self

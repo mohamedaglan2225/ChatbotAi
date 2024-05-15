@@ -21,6 +21,7 @@ let package = Package(
             name: "ChatbotAi",
             resources: [
                 .copy("ChatFramework/View/ChatView.xib"),
+                .copy("ChatFramework/View/MessagesView.xib"),
                 .copy("ChatFramework/Cells/SenderText/SenderTextCell.xib"),
                 .copy("ChatFramework/Cells/ReceiverText/ReceiverTextCell.xib"),
                 .copy("ChatFramework/Cells/RoomsCell/ChatRoomsCell.xib"),
