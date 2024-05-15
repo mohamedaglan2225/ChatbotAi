@@ -30,3 +30,19 @@ public final class Room: NSManagedObject, Object {
         return NSFetchRequest<Room>(entityName: "Room")
     }
 }
+
+extension Room {
+    @objc(addMessagesObject:)
+    public func addToMessages(_ value: MessageModel) {
+        self.willChangeValue(forKey: "messages")
+        var tempSet: NSMutableSet
+        if let existingMessages = self.mutableSetValue(forKey: "messages") as? NSMutableSet {
+            tempSet = existingMessages
+        } else {
+            tempSet = NSMutableSet()
+        }
+        tempSet.add(value)
+        self.setPrimitiveValue(tempSet, forKey: "messages")
+        self.didChangeValue(forKey: "messages")
+    }
+}

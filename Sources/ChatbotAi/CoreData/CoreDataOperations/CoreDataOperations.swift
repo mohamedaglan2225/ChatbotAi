@@ -30,9 +30,7 @@ public class DefaultMessageStorage: MessagesStorage {
         object.content = messages
         object.room = room
         object.timestamp = Date()
-        
-        let messages = room.mutableSetValue(forKey: "messages")
-        messages.add(object)
+        room.addToMessages(object)
         
         coreDataWrapper.saveContext()
     }
