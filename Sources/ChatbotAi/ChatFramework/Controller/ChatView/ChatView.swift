@@ -232,10 +232,14 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
 extension ChatView {
     
     private func sendTextMessage() {
-        self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
         
         guard let id = roomId else {return}
-        self.storage.saveMessages(messageTextView.text, id)
+        
+        if let message = messageTextView.text {
+            let sentMessage = ChatMessage(role: "User", content: message)
+            self.chatModel.append(Choice(index: nil, message: sentMessage, logprobs: "", finishReason: ""))
+            self.storage.saveMessages(message, id)
+        }
         
         request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
             guard let self = self else {return}
