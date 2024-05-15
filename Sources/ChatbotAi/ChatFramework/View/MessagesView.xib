@@ -12,7 +12,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessagesView" customModuleProvider="target">
             <connections>
+                <outlet property="bottomConstraint" destination="5Ef-PN-gM8" id="Pz9-OS-GaL"/>
+                <outlet property="messageTextContainerView" destination="nhv-zP-6v4" id="Oj4-pm-3HS"/>
+                <outlet property="messageTextView" destination="az1-si-Exb" id="S76-gn-t76"/>
+                <outlet property="newChatStackView" destination="b7B-bp-Yv2" id="dQT-eX-bX9"/>
+                <outlet property="newChatsContainerStackView" destination="4nI-yC-P2d" id="Qca-AY-1Lv"/>
+                <outlet property="previousChatStackView" destination="IgR-bY-Iie" id="bkq-1L-R5Z"/>
+                <outlet property="sendMessageBt" destination="Mpa-gf-9I5" id="2Vs-eW-GVv"/>
                 <outlet property="tableView" destination="SUh-7I-zDu" id="m09-hG-Dcu"/>
+                <outlet property="textHeight" destination="zT9-Uz-Ucj" id="W0Q-JS-YzA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,6 +42,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" image="Arrow - Right"/>
+                                            <connections>
+                                                <action selector="backButton:" destination="-1" eventType="touchUpInside" id="YTI-2s-J1V"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2J-WK-Uta">
                                             <rect key="frame" x="181" y="0.0" width="31.5" height="34"/>
@@ -45,6 +56,9 @@
                                             <rect key="frame" x="359" y="0.0" width="23" height="34"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" image="dropDownIcon"/>
+                                            <connections>
+                                                <action selector="moreButton:" destination="-1" eventType="touchUpInside" id="gX3-kU-0cW"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
@@ -146,6 +160,9 @@
                                     <rect key="frame" x="249" y="0.0" width="75" height="55"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" image="microphone"/>
+                                    <connections>
+                                        <action selector="sendRecordButton:" destination="-1" eventType="touchUpInside" id="Bjo-yx-6xd"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mpa-gf-9I5">
                                     <rect key="frame" x="332" y="0.0" width="50" height="55"/>
@@ -155,6 +172,9 @@
                                     <color key="tintColor" systemColor="systemBlueColor"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" image="send"/>
+                                    <connections>
+                                        <action selector="sendTextMessageButton:" destination="-1" eventType="touchUpInside" id="uvd-q7-GVQ"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>

@@ -55,6 +55,15 @@ class ChatView: UIViewController {
         configureInitialDesign()
     }
 
+    public init() {
+        super.init(nibName: "ChatView", bundle: Bundle.module)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     
     deinit {
         NotificationCenter.default.removeObserver(self)

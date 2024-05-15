@@ -115,8 +115,8 @@ extension RoomsView: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let parentVC = parentViewController {
-            let destinationViewController = MessagesView()
-//            destinationViewController.roomId = Int(rooms[indexPath.row].roomId)
+            let destinationViewController = ChatView()
+            destinationViewController.roomId = Int(rooms[indexPath.row].roomId)
             parentVC.present(destinationViewController, animated: true, completion: nil)
         } else {
             print("Parent view controller not found")
