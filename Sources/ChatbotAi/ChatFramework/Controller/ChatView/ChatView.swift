@@ -115,8 +115,8 @@ class ChatView: UIViewController {
     
     
     private func fetchCoreDataMessages() {
-//        guard let id = roomId else {return}
-        chatModel = self.storage.fetchMessages(roomId: 1)
+        guard let id = roomId else {return}
+        chatModel = self.storage.fetchMessages(roomId: id)
         tableView.reloadData()
     }
     
@@ -146,7 +146,7 @@ class ChatView: UIViewController {
     
     
     @IBAction func backButton(_ sender: UIButton) {
-        
+        dismiss(animated: true)
     }
     
     @objc private func dismissKeyboard() {
@@ -234,8 +234,8 @@ extension ChatView {
     private func sendTextMessage() {
         self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: messageTextView.text ?? ""), logprobs: "", finishReason: ""))
         
-//        guard let id = roomId else {return}
-        self.storage.saveMessages(messageTextView.text, 1)
+        guard let id = roomId else {return}
+        self.storage.saveMessages(messageTextView.text, id)
         
         request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
             guard let self = self else {return}
@@ -250,7 +250,7 @@ extension ChatView {
                     if let responseContent = success.choices?.first?.message?.content {
                         let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
                         self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
-                        self.storage.saveMessages(responseContent, 1)
+                        self.storage.saveMessages(responseContent, id)
                     }
                     self.tableView.reloadData()
                     self.sendMessageBt.isHidden = true

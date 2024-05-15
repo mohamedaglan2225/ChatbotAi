@@ -116,6 +116,7 @@ extension RoomsView: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let parentVC = parentViewController {
             let destinationViewController = ChatView()
+            destinationViewController.modalPresentationStyle = .fullScreen
             destinationViewController.roomId = Int(rooms[indexPath.row].roomId)
             parentVC.present(destinationViewController, animated: true, completion: nil)
         } else {
