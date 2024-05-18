@@ -224,28 +224,6 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
                 return receiverCell
             }
         }
-//        
-//        if indexPath.row % 2 == 0 {
-//            if let senderCell = tableView.dequeueReusableCell(withIdentifier: "SenderTextCell", for: indexPath) as? SenderTextCell {
-//                senderCell.configureCell(model: chatModel[indexPath.row])
-//                return senderCell
-//            }
-//        }else {
-//            if let receiverCell = tableView.dequeueReusableCell(withIdentifier: "ReceiverTextCell", for: indexPath) as? ReceiverTextCell {
-//                receiverCell.configureCell(model: chatModel[indexPath.row])
-//                receiverCell.dropDownMenueClosure = { [weak self] in
-//                    guard let _ = self else {return}
-////                    if let parentVC = parentViewController {
-////                        let destinationViewController = EditOnMessagesController()
-////                        destinationViewController.delegate = self
-////                        parentVC.present(destinationViewController, animated: true, completion: nil)
-////                    } else {
-////                        print("Parent view controller not found")
-////                    }
-//                }
-//                return receiverCell
-//            }
-//        }
         return UITableViewCell()
     }
 }
@@ -259,9 +237,12 @@ extension ChatView {
         
         if let message = messageTextView.text {
             let sentMessage = ChatMessage(role: "User", content: message)
-//            self.chatModel.append(Choice(index: nil, message: sentMessage, logprobs: "", finishReason: ""))
-            self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
-            self.storage.saveMessages(message, id)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {return}
+                self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
+                self.storage.saveMessages(message, id)
+                self.tableView.reloadData()
+            }
         }
         
         request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
@@ -272,7 +253,6 @@ extension ChatView {
                     // Handle the response from ChatGPT
                     if let responseContent = success.choices?.first?.message?.content {
                         let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
-//                        self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
                         self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
                         self.storage.saveMessages(responseContent, id)
                     }
