@@ -34,7 +34,11 @@ class ChatView: UIViewController {
     //MARK: - Properties -
     let XIB_NAME = "ChatView"
     private var request = Networking()
-    var chatModel: [Choice] = []
+    var chatModel: [Choice] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     public var apiKey: String?
     weak var delegate: ReusableViewDelegate?
@@ -116,7 +120,7 @@ class ChatView: UIViewController {
     
     private func fetchCoreDataMessages() {
         guard let id = roomId else {return}
-        chatModel = self.storage.fetchMessages(roomId: id)
+        chatModel = self.storage.fetchMessages(roomId: id).reversed()
         tableView.reloadData()
     }
     
@@ -240,8 +244,8 @@ extension ChatView {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
+//                self.tableView.reloadData()
                 self.storage.saveMessages(message, id)
-                self.tableView.reloadData()
             }
         }
         
@@ -256,7 +260,7 @@ extension ChatView {
                         self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
                         self.storage.saveMessages(responseContent, id)
                     }
-                    self.tableView.reloadData()
+//                    self.tableView.reloadData()
                     self.sendMessageBt.isHidden = true
                     self.textHeight.constant = 40
                     self.messageTextView.text = ""
