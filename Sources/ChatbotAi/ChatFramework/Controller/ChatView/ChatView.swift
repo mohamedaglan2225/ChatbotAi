@@ -237,7 +237,8 @@ extension ChatView {
         
         if let message = messageTextView.text {
             let sentMessage = ChatMessage(role: "User", content: message)
-            self.chatModel.append(Choice(index: nil, message: sentMessage, logprobs: "", finishReason: ""))
+//            self.chatModel.append(Choice(index: nil, message: sentMessage, logprobs: "", finishReason: ""))
+            self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
             self.storage.saveMessages(message, id)
         }
         
@@ -253,7 +254,8 @@ extension ChatView {
                     // Handle the response from ChatGPT
                     if let responseContent = success.choices?.first?.message?.content {
                         let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
-                        self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
+//                        self.chatModel.append(Choice(index: nil, message: chatGPTMessage, logprobs: nil, finishReason: nil))
+                        self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
                         self.storage.saveMessages(responseContent, id)
                     }
                     self.tableView.reloadData()
