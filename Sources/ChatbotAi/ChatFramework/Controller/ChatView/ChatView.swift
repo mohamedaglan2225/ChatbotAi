@@ -203,7 +203,7 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row % 2 == 0 {
+        if chatModel[indexPath.row].message?.role == "User" {
             if let senderCell = tableView.dequeueReusableCell(withIdentifier: "SenderTextCell", for: indexPath) as? SenderTextCell {
                 senderCell.configureCell(model: chatModel[indexPath.row])
                 return senderCell
@@ -224,6 +224,28 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
                 return receiverCell
             }
         }
+//        
+//        if indexPath.row % 2 == 0 {
+//            if let senderCell = tableView.dequeueReusableCell(withIdentifier: "SenderTextCell", for: indexPath) as? SenderTextCell {
+//                senderCell.configureCell(model: chatModel[indexPath.row])
+//                return senderCell
+//            }
+//        }else {
+//            if let receiverCell = tableView.dequeueReusableCell(withIdentifier: "ReceiverTextCell", for: indexPath) as? ReceiverTextCell {
+//                receiverCell.configureCell(model: chatModel[indexPath.row])
+//                receiverCell.dropDownMenueClosure = { [weak self] in
+//                    guard let _ = self else {return}
+////                    if let parentVC = parentViewController {
+////                        let destinationViewController = EditOnMessagesController()
+////                        destinationViewController.delegate = self
+////                        parentVC.present(destinationViewController, animated: true, completion: nil)
+////                    } else {
+////                        print("Parent view controller not found")
+////                    }
+//                }
+//                return receiverCell
+//            }
+//        }
         return UITableViewCell()
     }
 }
@@ -247,10 +269,6 @@ extension ChatView {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let success):
-                    print("Response ID: \(success.id ?? "")")
-                    print("Response Model: \(success.model ?? "")")
-                    print("Response Content Message: \(success.choices?.first?.message?.content ?? "")")
-                    
                     // Handle the response from ChatGPT
                     if let responseContent = success.choices?.first?.message?.content {
                         let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
@@ -334,15 +352,11 @@ extension ChatView: EditOnMessageAction {
     
     func editMessage(message: String) {
         self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: message), logprobs: "", finishReason: ""))
-        
         request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {
                 case .success(let success):
-                    print("Response ID: \(success.id ?? "")")
-                    print("Response Model: \(success.model ?? "")")
-                    print("Response Content Message: \(success.choices?.first?.message?.content ?? "")")
                     self.chatModel.append(Choice(index: 0, message: ChatMessage(role: "", content: success.choices?.first?.message?.content ?? ""), logprobs: "", finishReason: ""))
                     self.tableView.reloadData()
                 case .failure(let failure):
