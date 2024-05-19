@@ -53,6 +53,7 @@ class RecordView: UIViewController {
     }
     
     
+    
     private func calculateDuration(duration:Int)->String{
         self.duration += 1
         let hours = duration / 3600

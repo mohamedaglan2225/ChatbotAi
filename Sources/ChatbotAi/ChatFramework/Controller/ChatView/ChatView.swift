@@ -289,8 +289,7 @@ extension ChatView {
                             popOverPresentaion.sourceView = sender
                             popOverPresentaion.sourceRect = sender.bounds
                             popOverPresentaion.delegate = self
-                            let parentVC = RecordView()
-                            parentVC.present(popOver, animated: true, completion: nil)
+                            present(popOver, animated: true, completion: nil)
                         }
                         break
                         
