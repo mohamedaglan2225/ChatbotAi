@@ -351,7 +351,7 @@ extension ChatView: EditOnMessageAction {
 //MARK: - Networking -
 extension ChatView: VoiceNoteDelegate {
     func updateWithVoiceNote(record: Data, duration: Double) {
-        request.sendAudioFileToOpenAI(audioData: record, model: "whisper-1", apiKey: apiKey ?? "") { result in
+        request.sendAudioFileToOpenAI2(audioData: record, model: "whisper-1", apiKey: apiKey ?? "") { result in
             switch result {
             case .success(let transcriptionResponse):
                 // Handle success
