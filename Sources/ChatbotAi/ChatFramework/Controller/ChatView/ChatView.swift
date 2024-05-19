@@ -193,6 +193,8 @@ class ChatView: UIViewController {
 //            } else {
 //                print("Parent view controller not found")
 //            }
+        
+        
 //        }
     }
     
@@ -288,11 +290,8 @@ extension ChatView {
                             popOverPresentaion.sourceView = sender
                             popOverPresentaion.sourceRect = sender.bounds
                             popOverPresentaion.delegate = self
-//                            if let parentVC = parentViewController {
-//                                parentVC.present(popOver, animated: true, completion: nil)
-//                            } else {
-//                                print("Parent view controller not found")
-//                            }
+                            let parentVC = RecordView()
+                            parentVC.present(popOver, animated: true, completion: nil)
                         }
                         break
                         
