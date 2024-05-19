@@ -281,7 +281,6 @@ extension ChatView {
                     switch AVAudioSession.sharedInstance().recordPermission {
                     case .granted:
                         let popOver = RecordView()
-                        
                         popOver.preferredContentSize = CGSize(width: 250, height: 60)
                         popOver.modalPresentationStyle = .popover
                         popOver.voiceNoteDelegate = self

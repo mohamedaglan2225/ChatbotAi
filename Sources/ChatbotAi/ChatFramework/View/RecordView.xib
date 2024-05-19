@@ -16,6 +16,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecordView" customModuleProvider="target">
             <connections>
                 <outlet property="recordDuration" destination="tK5-fW-yyh" id="Ps7-Qy-fuJ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="vNx-LY-2qw"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
