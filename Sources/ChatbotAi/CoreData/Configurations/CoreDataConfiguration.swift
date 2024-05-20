@@ -75,7 +75,6 @@ public final class CoreDataWrapper: CoreDataWrapping {
                                         sortDescriptors: [NSSortDescriptor]? = nil) -> [T] {
         let fetchRequest: NSFetchRequest<T> = T.fetchRequest()
         fetchRequest.predicate = predicate
-        fetchRequest.fetchLimit = .max
         fetchRequest.sortDescriptors = sortDescriptors
 
         do {
