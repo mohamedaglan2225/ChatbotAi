@@ -235,27 +235,38 @@ extension ChatView {
             }
         }
         
-        request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
-            guard let self = self else {return}
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let success):
-                    // Handle the response from ChatGPT
-                    if let responseContent = success.choices?.first?.message?.content {
-                        let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
-                        self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
-                        guard let id = self.roomId else {return}
-                        self.storage.saveMessages(responseContent, id)
-                    }
-                    self.sendMessageBt.isHidden = true
-                    self.textHeight.constant = 40
-                    self.messageTextView.text = ""
-                    self.tableView.scrollToTop()
-                case .failure(let failure):
-                    print("Error: \(failure)")
-                }
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            var responseContent = "responseContent /n responseContent"
+            let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
+            self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
+            guard let id = self.roomId else {return}
+            self.storage.saveMessages(responseContent, id)
+            self.sendMessageBt.isHidden = true
+            self.textHeight.constant = 40
+            self.messageTextView.text = ""
+            self.tableView.scrollToTop()
         }
+//        request.sendChatRequest(prompt: messageTextView.text, apiKey: apiKey ?? "") { [weak self] result in
+//            guard let self = self else {return}
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let success):
+//                    // Handle the response from ChatGPT
+//                    if let responseContent = success.choices?.first?.message?.content {
+//                        let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
+//                        self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
+//                        guard let id = self.roomId else {return}
+//                        self.storage.saveMessages(responseContent, id)
+//                    }
+//                    self.sendMessageBt.isHidden = true
+//                    self.textHeight.constant = 40
+//                    self.messageTextView.text = ""
+//                    self.tableView.scrollToTop()
+//                case .failure(let failure):
+//                    print("Error: \(failure)")
+//                }
+//            }
+//        }
     }
     
     private func sendRecord(_ sender: UIButton) {
