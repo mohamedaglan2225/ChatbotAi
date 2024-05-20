@@ -26,8 +26,7 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func saveMessages(_ messages: String, _ roomId: Int){
-//        let room = getOrCreateRoom(with: Int64(roomId))
-        let room = fetchRoom(with: Int64(roomId))
+        let room = getOrCreateRoom(with: Int64(roomId))
         let object = coreDataWrapper.createObject(ofType: MessageModel.self)
         object.id = UUID()
         object.content = messages
@@ -41,7 +40,6 @@ public class DefaultMessageStorage: MessagesStorage {
     public func getOrCreateRoom(with roomId: Int64) -> Room {
         let predicate = NSPredicate(format: "roomId = %d", roomId)
         let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
-        
         if let existingRoom = rooms.first {
             return existingRoom
         } else {
@@ -52,15 +50,10 @@ public class DefaultMessageStorage: MessagesStorage {
         }
     }
     
-    private func fetchRoom(with roomId: Int64) -> Room {
-        let predicate = NSPredicate(format: "roomId = %d", roomId)
-        let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
-        return rooms.first!
-    }
     
     
     public func fetchMessages(roomId: Int) -> [Choice] {
-        //        let int64RoomId = Int64(roomId)
+//        let int64RoomId = Int64(roomId)
         let predicate = \MessageModel.room.roomId == Int64(roomId)
         let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: predicate)
         return objects.map {
