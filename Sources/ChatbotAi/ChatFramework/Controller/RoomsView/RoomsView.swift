@@ -53,6 +53,13 @@ public class RoomsView: UIView {
     }
     
     
+    public override func didMoveToWindow() {
+        super.didMoveToWindow()
+        if self.window != nil {
+            fetchRooms()
+        }
+    }
+    
     
     //MARK: - Configure Design -
     private func configureInitialDesign() {
