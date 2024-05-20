@@ -38,8 +38,7 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func fetchMessages(roomId: Int) -> [Choice] {
-        let int64RoomId = Int64(roomId)
-//        let predicate = NSPredicate(format: "room.roomId == %@", String(int64RoomId))
+//        let int64RoomId = Int64(roomId)
         let predicate = \MessageModel.room.roomId == Int64(roomId)
         let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: predicate)
         return objects.map {
