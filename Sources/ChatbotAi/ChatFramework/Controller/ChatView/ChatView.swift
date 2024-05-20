@@ -122,8 +122,14 @@ class ChatView: UIViewController {
 //        guard let id = roomId else {return}
 //        chatModel = self.storage.fetchMessages(roomId: id).reversed()
         
-        let roomId = self.roomId ?? self.storage.createRoomId()
-        self.chatModel = self.storage.fetchMessages(roomId: roomId).reversed()
+        if self.roomId == nil {
+            self.roomId = self.storage.createRoomId()
+        }else {
+            guard let roomId = roomId else {return}
+            self.chatModel = self.storage.fetchMessages(roomId: roomId).reversed()
+        }
+//        let roomId = self.roomId ?? self.storage.createRoomId()
+//        self.chatModel = self.storage.fetchMessages(roomId: roomId).reversed()
         
     }
     
