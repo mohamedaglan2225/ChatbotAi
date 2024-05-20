@@ -14,6 +14,7 @@ class ChatRoomsCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        selectionStyle = .none
         containerView.layer.cornerRadius = 8
         containerView.layer.borderWidth = 0.1
         containerView.layer.borderColor = UIColor.white.cgColor

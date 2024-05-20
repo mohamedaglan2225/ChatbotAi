@@ -30,7 +30,6 @@ class ChatView: UIViewController {
     
     
     
-    
     //MARK: - Properties -
     let XIB_NAME = "ChatView"
     private var request = Networking()
@@ -122,7 +121,6 @@ class ChatView: UIViewController {
     private func fetchCoreDataMessages() {
         guard let id = roomId else {return}
         chatModel = self.storage.fetchMessages(roomId: id).reversed()
-        tableView.reloadData()
     }
     
 
@@ -183,20 +181,7 @@ class ChatView: UIViewController {
     
     
     @objc private func gotToPreviousChatAction() {
-        self.newChatsContainerStackView.isHidden = true
-        self.view.removeFromSuperview()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-//            guard let self = self else {return}
-//            if let parentVC = parentViewController {
-//                let destinationViewController = RoomsView()
-//                destinationViewController.modalPresentationStyle = .fullScreen
-//                parentVC.present(destinationViewController, animated: true, completion: nil)
-//            } else {
-//                print("Parent view controller not found")
-//            }
-        
-        
-//        }
+        dismiss(animated: true)
     }
     
     
@@ -220,14 +205,10 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
             if let receiverCell = tableView.dequeueReusableCell(withIdentifier: "ReceiverTextCell", for: indexPath) as? ReceiverTextCell {
                 receiverCell.configureCell(model: chatModel[indexPath.row])
                 receiverCell.dropDownMenueClosure = { [weak self] in
-                    guard let _ = self else {return}
-//                    if let parentVC = parentViewController {
-//                        let destinationViewController = EditOnMessagesController()
-//                        destinationViewController.delegate = self
-//                        parentVC.present(destinationViewController, animated: true, completion: nil)
-//                    } else {
-//                        print("Parent view controller not found")
-//                    }
+                    guard let self = self else {return}
+                    let vc = EditOnMessagesController()
+                    vc.delegate = self
+                    self.present(vc, animated: true)
                 }
                 return receiverCell
             }

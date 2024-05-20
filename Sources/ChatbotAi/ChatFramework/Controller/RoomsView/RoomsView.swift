@@ -66,7 +66,6 @@ public class RoomsView: UIView {
     
     
     private func fetchRooms() {
-        print("All Rooms are here \(storage.fetchRooms())")
         rooms = storage.fetchRooms()
     }
     
@@ -82,13 +81,15 @@ public class RoomsView: UIView {
     
     //MARK: - IBActions -
     @objc private func newChatAction() {
-//        let chatViewTap = ChatView(frame: self.bounds)
-//        let newRoom = storage.getOrCreateRoom(with: )
-//        print("Room created with name: \(newRoom.name) and ID: \(newRoom.roomId)")
-//        self.addSubview(chatViewTap)
+        if let parentVC = parentViewController {
+            let destinationViewController = ChatView()
+            destinationViewController.modalPresentationStyle = .fullScreen
+            parentVC.present(destinationViewController, animated: true, completion: nil)
+        } else {
+            fatalError("Parent view controller not found")
+        }
     }
     
-
 }
 
 
@@ -120,9 +121,7 @@ extension RoomsView: UITableViewDataSource, UITableViewDelegate {
             destinationViewController.roomId = Int(rooms[indexPath.row].roomId)
             parentVC.present(destinationViewController, animated: true, completion: nil)
         } else {
-            print("Parent view controller not found")
+            fatalError("Parent view controller not found")
         }
-//        chatViewTap.roomId = Int(rooms[indexPath.row].roomId)
-//        self.addSubview(chatViewTap)
     }
 }
