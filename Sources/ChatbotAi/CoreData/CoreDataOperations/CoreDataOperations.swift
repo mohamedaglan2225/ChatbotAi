@@ -40,7 +40,7 @@ public class DefaultMessageStorage: MessagesStorage {
     public func fetchMessages(roomId: Int) -> [Choice] {
         let int64RoomId = Int64(roomId)
         let predicate = NSPredicate(format: "room.roomId = %d", int64RoomId)
-        let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: predicate)
+        let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self)
         return objects.map {
             Choice(
                 message: ChatMessage(content: $0.content)
