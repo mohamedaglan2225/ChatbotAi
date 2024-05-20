@@ -25,11 +25,7 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func saveMessages(_ messages: String, _ roomId: Int){
-        //        let room = getOrCreateRoom(with: Int64(roomId))
-        guard let room = fetchRoom(with: Int64(roomId)) else {
-            print("Error: Room with ID \(roomId) not found.")
-            return
-        }
+        let room = fetchRoom(with: Int64(roomId)) ?? getOrCreateRoom(with: Int64(roomId))
         let object = coreDataWrapper.createObject(ofType: MessageModel.self)
         object.id = UUID()
         object.content = messages
@@ -49,19 +45,37 @@ public class DefaultMessageStorage: MessagesStorage {
     }
     
     
+//    public func getOrCreateRoom(with roomId: Int64) -> Room {
+//        let predicate = NSPredicate(format: "roomId = %d", roomId)
+//        let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
+//        
+//        if let existingRoom = rooms.first {
+//            return existingRoom
+//        } else {
+//            let newRoom = coreDataWrapper.createRoom(ofType: Room.self)
+//            newRoom.roomId = roomId
+//            coreDataWrapper.saveContext()
+//            return newRoom
+//        }
+//    }
+    
+    
     public func getOrCreateRoom(with roomId: Int64) -> Room {
-        let predicate = NSPredicate(format: "roomId = %d", roomId)
+        let predicate = NSPredicate(format: "roomId = %lld", roomId)  // Ensure the format specifier is correct
         let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
-        
+
         if let existingRoom = rooms.first {
+            print("Found existing room with ID: \(roomId)")
             return existingRoom
         } else {
+            print("Creating new room with ID: \(roomId)")
             let newRoom = coreDataWrapper.createRoom(ofType: Room.self)
             newRoom.roomId = roomId
             coreDataWrapper.saveContext()
             return newRoom
         }
     }
+    
     
     public func createRoomId() -> Int {
         let newRoom = self.getOrCreateRoom(with: generateRoomId())
