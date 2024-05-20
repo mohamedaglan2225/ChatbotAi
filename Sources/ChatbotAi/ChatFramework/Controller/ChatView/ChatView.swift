@@ -211,6 +211,7 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if chatModel[indexPath.row].message?.role == "User" {
+            
             if let senderCell = tableView.dequeueReusableCell(withIdentifier: "SenderTextCell", for: indexPath) as? SenderTextCell {
                 senderCell.configureCell(model: chatModel[indexPath.row])
                 return senderCell

@@ -15,7 +15,7 @@ public struct ChatGPTModel: Decodable {
     var choices: [Choice]?
     var usage: Usage?
     var systemFingerprint: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, object, created, model, choices, usage
         case systemFingerprint = "system_fingerprint"
