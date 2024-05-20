@@ -25,7 +25,11 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func saveMessages(_ messages: String, _ roomId: Int){
-        let room = getOrCreateRoom(with: Int64(roomId))
+        //        let room = getOrCreateRoom(with: Int64(roomId))
+        guard let room = fetchRoom(with: Int64(roomId)) else {
+            print("Error: Room with ID \(roomId) not found.")
+            return
+        }
         let object = coreDataWrapper.createObject(ofType: MessageModel.self)
         object.id = UUID()
         object.content = messages
@@ -34,12 +38,7 @@ public class DefaultMessageStorage: MessagesStorage {
         coreDataWrapper.saveContext()
     }
     
-    
-    
-    
     public func fetchMessages(roomId: Int) -> [Choice] {
-        let int64RoomId = Int64(roomId)
-//        let predicate = NSPredicate(format: "room.roomId == %@", String(int64RoomId))
         let predicate = \MessageModel.room.roomId == Int64(roomId)
         let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: predicate)
         return objects.map {
@@ -63,6 +62,20 @@ public class DefaultMessageStorage: MessagesStorage {
             return newRoom
         }
     }
+    
+    public func createRoomId() -> Int {
+        let newRoom = self.getOrCreateRoom(with: generateRoomId())
+        coreDataWrapper.saveContext()
+        return Int(newRoom.roomId)
+    }
+    
+    
+    private func fetchRoom(with roomId: Int64) -> Room? {
+        let predicate = NSPredicate(format: "roomId = %d", roomId)
+        let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
+        return rooms.first
+    }
+    
     
     public func fetchRooms() -> [Room] {
         let objects = coreDataWrapper.fetchObjects(ofType: Room.self)
