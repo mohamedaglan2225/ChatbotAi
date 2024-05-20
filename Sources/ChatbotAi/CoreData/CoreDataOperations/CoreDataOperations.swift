@@ -12,6 +12,7 @@ public protocol MessagesStorage {
     func saveMessages(_ messages: String, _ roomId: Int)
     func getOrCreateRoom(with rooId: Int64) -> Room
     func fetchRooms() -> [Room]
+    func createRoomId() -> Int
 }
 
 
@@ -33,8 +34,6 @@ public class DefaultMessageStorage: MessagesStorage {
         object.timestamp = Date()
         coreDataWrapper.saveContext()
     }
-    
-    
     
     
     public func fetchMessages(roomId: Int) -> [Choice] {
@@ -66,6 +65,12 @@ public class DefaultMessageStorage: MessagesStorage {
     public func fetchRooms() -> [Room] {
         let objects = coreDataWrapper.fetchObjects(ofType: Room.self)
         return objects
+    }
+    
+    public func createRoomId() -> Int {
+        let newRoom = self.getOrCreateRoom(with: generateRoomId())
+        coreDataWrapper.saveContext()
+        return Int(newRoom.roomId)
     }
     
     

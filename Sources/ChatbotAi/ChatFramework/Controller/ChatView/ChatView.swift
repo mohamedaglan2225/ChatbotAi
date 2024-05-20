@@ -119,12 +119,16 @@ class ChatView: UIViewController {
     
     
     private func fetchCoreDataMessages() {
-        guard let id = roomId else {return}
-        chatModel = self.storage.fetchMessages(roomId: id).reversed()
+//        guard let id = roomId else {return}
+//        chatModel = self.storage.fetchMessages(roomId: id).reversed()
+        
+        let roomId = self.roomId ?? self.storage.createRoomId()
+        self.chatModel = self.storage.fetchMessages(roomId: roomId).reversed()
+        
     }
     
-
-  
+    
+    
     @IBAction func sendMessageButton(_ sender: UIButton) {
         sendTextMessage()
     }
@@ -221,14 +225,12 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
 extension ChatView {
     
     private func sendTextMessage() {
-        
-        guard let id = roomId else {return}
-        
         if let message = messageTextView.text {
             let sentMessage = ChatMessage(role: "User", content: message)
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
+                guard let id = roomId else {return}
                 self.storage.saveMessages(message, id)
             }
         }
@@ -242,6 +244,7 @@ extension ChatView {
                     if let responseContent = success.choices?.first?.message?.content {
                         let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
                         self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
+                        guard let id = self.roomId else {return}
                         self.storage.saveMessages(responseContent, id)
                     }
                     self.sendMessageBt.isHidden = true
