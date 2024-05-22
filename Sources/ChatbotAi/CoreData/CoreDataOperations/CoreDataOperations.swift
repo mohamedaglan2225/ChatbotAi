@@ -25,7 +25,7 @@ public class DefaultMessageStorage: MessagesStorage {
     }
     
     
-    public func saveMessages(_ messages: String, _ roomId: Int, _ senderType: String){
+    public func saveMessages(_ messages: String, _ roomId: Int, _ senderType: String) {
         let room = fetchRoom(with: Int64(roomId)) ?? ensureRoom(with: Int64(roomId))
         let object = coreDataWrapper.createObject(ofType: MessageModel.self)
         object.id = UUID()
@@ -41,7 +41,7 @@ public class DefaultMessageStorage: MessagesStorage {
         let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: predicate)
         return objects.map {
             Choice(
-                message: ChatMessage(content: $0.content)
+                message: ChatMessage(role: $0.senderType, content: $0.content)
             )
         }
     }
