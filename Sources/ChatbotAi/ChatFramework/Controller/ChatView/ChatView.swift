@@ -110,6 +110,7 @@ class ChatView: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
     
     func registerKeyboardNotifications() {
