@@ -77,7 +77,7 @@ public class DefaultMessageStorage: MessagesStorage {
     }
     
     public func ensureRoom(with roomId: Int64?) -> Room {
-        if let roomId = roomId {
+        if let roomId = roomId, roomId != 0 {
             // Attempt to fetch the existing room
             let predicate = NSPredicate(format: "roomId = %lld", roomId)
             let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
