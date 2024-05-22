@@ -61,7 +61,7 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func getOrCreateRoom(with roomId: Int64) -> Room {
-        let predicate = NSPredicate(format: "roomId = %lld", roomId)  // Ensure the format specifier is correct
+        let predicate = NSPredicate(format: "roomId = %d", roomId)  // Ensure the format specifier is correct
         let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
 
         if let existingRoom = rooms.first {
@@ -76,6 +76,28 @@ public class DefaultMessageStorage: MessagesStorage {
         }
     }
     
+    public func ensureRoom(with roomId: Int64?) -> Room {
+        if let roomId = roomId {
+            // Attempt to fetch the existing room
+            let predicate = NSPredicate(format: "roomId = %lld", roomId)
+            let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
+            if let existingRoom = rooms.first {
+                print("Using existing room with ID: \(roomId)")
+                return existingRoom
+            }
+        }
+        // If roomId is nil or no room found, create a new one
+        print("No existing room found, creating new room.")
+        return createNewRoom()
+    }
+    
+    private func createNewRoom() -> Room {
+        let newRoom = coreDataWrapper.createRoom(ofType: Room.self)
+        newRoom.roomId = generateRoomId()
+        coreDataWrapper.saveContext()
+        return newRoom
+    }
+
     
     public func createRoomId() -> Int {
         let newRoom = self.getOrCreateRoom(with: generateRoomId())

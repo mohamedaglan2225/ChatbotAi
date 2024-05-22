@@ -123,13 +123,14 @@ class ChatView: UIViewController {
 //        chatModel = self.storage.fetchMessages(roomId: id).reversed()
         
 //        if self.roomId == nil {
-//            self.roomId = self.storage.createRoomId()
-//        }else {
-            guard let roomId = roomId else {return}
-            self.chatModel = self.storage.fetchMessages(roomId: roomId).reversed()
-//        }
-//        let roomId = self.roomId ?? self.storage.createRoomId()
-//        self.chatModel = self.storage.fetchMessages(roomId: roomId).reversed()
+        //            self.roomId = self.storage.createRoomId()
+        //        }else {
+        guard let roomId = roomId else {return}
+        self.chatModel = self.storage.fetchMessages(roomId: roomId).reversed()
+        
+        //        }
+        //        let roomId = self.roomId ?? self.storage.createRoomId()
+        //        self.chatModel = self.storage.fetchMessages(roomId: roomId).reversed()
         
     }
     
@@ -236,8 +237,8 @@ extension ChatView {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
-                guard let id = roomId else {return}
-                self.storage.saveMessages(message, id)
+//                guard let id = roomId else {return}
+                self.storage.saveMessages(message, roomId ?? 0)
             }
         }
         
@@ -245,8 +246,8 @@ extension ChatView {
             var responseContent = "responseContent /n responseContent"
             let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
             self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
-            guard let id = self.roomId else {return}
-            self.storage.saveMessages(responseContent, id)
+//            guard let id = self.roomId else {return}
+            self.storage.saveMessages(responseContent, self.roomId ?? 0)
             self.sendMessageBt.isHidden = true
             self.textHeight.constant = 40
             self.messageTextView.text = ""
