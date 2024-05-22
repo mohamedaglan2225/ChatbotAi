@@ -92,15 +92,6 @@ public class RoomsView: UIView {
         // Add a text field to the alert controller
         alertController.addTextField { textField in
             textField.placeholder = "Type something here..."
-            let newRoomId = self.storage.createNewRoom(roomName: textField.text ?? "Default")
-            if let parentVC = self.parentViewController {
-                let destinationViewController = ChatView()
-                destinationViewController.roomId = Int(newRoomId.roomId)
-                destinationViewController.modalPresentationStyle = .fullScreen
-                parentVC.present(destinationViewController, animated: true, completion: nil)
-            } else {
-                fatalError("Parent view controller not found")
-            }
         }
         
         // Create the OK action
@@ -108,7 +99,16 @@ public class RoomsView: UIView {
             // Retrieve the first text field's text
             if let textField = alertController?.textFields?.first, let inputText = textField.text {
                 print("Input: \(inputText)")
-                // Handle the input text
+                let newRoomId = self.storage.createNewRoom(roomName: inputText)
+                if let parentVC = self.parentViewController {
+                    let destinationViewController = ChatView()
+                    destinationViewController.roomId = Int(newRoomId.roomId)
+                    destinationViewController.modalPresentationStyle = .fullScreen
+                    parentVC.present(destinationViewController, animated: true, completion: nil)
+                } else {
+                    fatalError("Parent view controller not found")
+                }
+                
             }
         }
         
