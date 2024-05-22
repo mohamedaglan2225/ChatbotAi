@@ -25,7 +25,7 @@ public class DefaultMessageStorage: MessagesStorage {
     
     
     public func saveMessages(_ messages: String, _ roomId: Int){
-        let room = fetchRoom(with: Int64(roomId)) ?? getOrCreateRoom(with: Int64(roomId))
+        let room = fetchRoom(with: Int64(roomId)) ?? ensureRoom(with: Int64(roomId))
         let object = coreDataWrapper.createObject(ofType: MessageModel.self)
         object.id = UUID()
         object.content = messages
