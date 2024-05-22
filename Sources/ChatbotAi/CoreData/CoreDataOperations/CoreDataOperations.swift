@@ -9,7 +9,7 @@ import Foundation
 
 public protocol MessagesStorage {
     func fetchMessages(roomId: Int) -> [Choice]
-    func saveMessages(_ messages: String, _ roomId: Int)
+    func saveMessages(_ messages: String, _ roomId: Int?)
     func getOrCreateRoom(with rooId: Int64) -> Room
     func fetchRooms() -> [Room]
 }
@@ -24,14 +24,48 @@ public class DefaultMessageStorage: MessagesStorage {
     }
     
     
-    public func saveMessages(_ messages: String, _ roomId: Int){
-        let room = fetchRoom(with: Int64(roomId)) ?? ensureRoom(with: Int64(roomId))
-        let object = coreDataWrapper.createObject(ofType: MessageModel.self)
-        object.id = UUID()
-        object.content = messages
-        object.room = room
-        object.timestamp = Date()
-        coreDataWrapper.saveContext()
+//    public func ensureRoom(with roomId: Int64?) -> Room {
+//        if let roomId = roomId, roomId != 0 {
+//            // Attempt to fetch the existing room
+//            let predicate = NSPredicate(format: "roomId = %lld", roomId)
+//            let rooms = coreDataWrapper.fetchObjects(ofType: Room.self, predicate: predicate)
+//            if let existingRoom = rooms.first {
+//                print("Using existing room with ID: \(roomId)")
+//                return existingRoom
+//            }
+//        }
+//        // If roomId is nil or no room found, create a new one
+//        print("No existing room found, creating new room.")
+//        return createNewRoom()
+//    }
+    
+    
+    public func saveMessages(_ messages: String, _ roomId: Int?){
+        if let roomId = roomId, roomId != 0 {
+            guard let room = fetchRoom(with: Int64(roomId)) else {return}
+            let object = coreDataWrapper.createObject(ofType: MessageModel.self)
+            object.id = UUID()
+            object.content = messages
+            object.room = room
+            object.timestamp = Date()
+            coreDataWrapper.saveContext()
+        }else {
+            let room = createNewRoom()
+            let object = coreDataWrapper.createObject(ofType: MessageModel.self)
+            object.id = UUID()
+            object.content = messages
+            object.room = room
+            object.timestamp = Date()
+            coreDataWrapper.saveContext()
+            
+        }
+//        let room = fetchRoom(with: Int64(roomId)) ?? ensureRoom(with: Int64(roomId))
+//        let object = coreDataWrapper.createObject(ofType: MessageModel.self)
+//        object.id = UUID()
+//        object.content = messages
+//        object.room = room
+//        object.timestamp = Date()
+//        coreDataWrapper.saveContext()
     }
     
     public func fetchMessages(roomId: Int) -> [Choice] {
