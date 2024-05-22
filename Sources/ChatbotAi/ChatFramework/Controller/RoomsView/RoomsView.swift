@@ -88,8 +88,10 @@ public class RoomsView: UIView {
     
     //MARK: - IBActions -
     @objc private func newChatAction() {
+        let newRoomId = storage.createNewRoom()
         if let parentVC = parentViewController {
             let destinationViewController = ChatView()
+            destinationViewController.roomId = Int(newRoomId.roomId)
             destinationViewController.modalPresentationStyle = .fullScreen
             parentVC.present(destinationViewController, animated: true, completion: nil)
         } else {

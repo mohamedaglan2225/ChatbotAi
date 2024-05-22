@@ -237,8 +237,8 @@ extension ChatView {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
-//                guard let id = roomId else {return}
-                self.storage.saveMessages(message, roomId ?? 0)
+                guard let id = roomId else {return}
+                self.storage.saveMessages(message, id)
             }
         }
         
