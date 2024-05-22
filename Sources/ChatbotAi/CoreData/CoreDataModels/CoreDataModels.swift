@@ -14,6 +14,7 @@ public final class MessageModel: NSManagedObject, Object {
     @NSManaged public var id: UUID
     @NSManaged public var content: String
     @NSManaged public var timestamp: Date
+    @NSManaged public var senderType: String
     @NSManaged public var room: Room
 
     public static func fetchRequest() -> NSFetchRequest<MessageModel> {

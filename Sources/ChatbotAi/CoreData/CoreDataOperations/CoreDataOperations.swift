@@ -9,7 +9,7 @@ import Foundation
 
 public protocol MessagesStorage {
     func fetchMessages(roomId: Int) -> [Choice]
-    func saveMessages(_ messages: String, _ roomId: Int)
+    func saveMessages(_ messages: String, _ roomId: Int, _ senderType: String)
     func getOrCreateRoom(with rooId: Int64) -> Room
     func fetchRooms() -> [Room]
     func createNewRoom() -> Room
@@ -25,13 +25,14 @@ public class DefaultMessageStorage: MessagesStorage {
     }
     
     
-    public func saveMessages(_ messages: String, _ roomId: Int){
+    public func saveMessages(_ messages: String, _ roomId: Int, _ senderType: String){
         let room = fetchRoom(with: Int64(roomId)) ?? ensureRoom(with: Int64(roomId))
         let object = coreDataWrapper.createObject(ofType: MessageModel.self)
         object.id = UUID()
         object.content = messages
         object.room = room
         object.timestamp = Date()
+        object.senderType = senderType
         coreDataWrapper.saveContext()
     }
     

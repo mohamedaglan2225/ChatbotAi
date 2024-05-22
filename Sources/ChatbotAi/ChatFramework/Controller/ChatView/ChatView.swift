@@ -207,7 +207,6 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if chatModel[indexPath.row].message?.role == "User" {
-            
             if let senderCell = tableView.dequeueReusableCell(withIdentifier: "SenderTextCell", for: indexPath) as? SenderTextCell {
                 senderCell.configureCell(model: chatModel[indexPath.row])
                 return senderCell
@@ -238,7 +237,7 @@ extension ChatView {
                 guard let self = self else {return}
                 self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
                 guard let id = roomId else {return}
-                self.storage.saveMessages(message, id)
+                self.storage.saveMessages(message, id, "User")
             }
         }
         
@@ -246,8 +245,8 @@ extension ChatView {
             var responseContent = "responseContent /n responseContent"
             let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
             self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
-//            guard let id = self.roomId else {return}
-            self.storage.saveMessages(responseContent, self.roomId ?? 0)
+            guard let id = self.roomId else {return}
+            self.storage.saveMessages(responseContent, id, "ChatGPt")
             self.sendMessageBt.isHidden = true
             self.textHeight.constant = 40
             self.messageTextView.text = ""
