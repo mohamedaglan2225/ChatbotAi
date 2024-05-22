@@ -85,18 +85,54 @@ public class RoomsView: UIView {
         tableView.separatorStyle = .none
     }
     
-    
-    //MARK: - IBActions -
-    @objc private func newChatAction() {
-        let newRoomId = storage.createNewRoom()
+    func presentInputAlert() {
+        // Create the alert controller
+        let alertController = UIAlertController(title: "title", message: "Please enter your information", preferredStyle: .alert)
+        
+        // Add a text field to the alert controller
+        alertController.addTextField { textField in
+            textField.placeholder = "Type something here..."
+            let newRoomId = self.storage.createNewRoom(roomName: textField.text ?? "Default")
+            if let parentVC = self.parentViewController {
+                let destinationViewController = ChatView()
+                destinationViewController.roomId = Int(newRoomId.roomId)
+                destinationViewController.modalPresentationStyle = .fullScreen
+                parentVC.present(destinationViewController, animated: true, completion: nil)
+            } else {
+                fatalError("Parent view controller not found")
+            }
+        }
+        
+        // Create the OK action
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] _ in
+            // Retrieve the first text field's text
+            if let textField = alertController?.textFields?.first, let inputText = textField.text {
+                print("Input: \(inputText)")
+                // Handle the input text
+            }
+        }
+        
+        // Create the Cancel action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        // Add actions to the alert controller
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
         if let parentVC = parentViewController {
-            let destinationViewController = ChatView()
-            destinationViewController.roomId = Int(newRoomId.roomId)
-            destinationViewController.modalPresentationStyle = .fullScreen
-            parentVC.present(destinationViewController, animated: true, completion: nil)
+            parentVC.present(alertController, animated: true, completion: nil)
         } else {
             fatalError("Parent view controller not found")
         }
+        
+    }
+    
+    
+    
+    
+    //MARK: - IBActions -
+    @objc private func newChatAction() {
+       presentInputAlert()
     }
     
 }
@@ -111,7 +147,7 @@ extension RoomsView: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ChatRoomsCell", for: indexPath) as? ChatRoomsCell {
-            cell.chatRoomName.text = "\(rooms[indexPath.row].roomId)"
+            cell.chatRoomName.text = rooms[indexPath.row].name ?? ""
             return cell
         }
         return UITableViewCell()
