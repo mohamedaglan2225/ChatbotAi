@@ -222,21 +222,21 @@ extension ChatView {
     
     private func sendTextMessage() {
         if let message = messageTextView.text {
-            let sentMessage = ChatMessage(role: "User", content: message)
+            let sentMessage = ChatMessage(role: "User", content: message, type: "text")
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
                 guard let id = roomId else {return}
-                self.storage.saveMessages(message, id, "User")
+                self.storage.saveMessages(messages: message, roomId: id, senderType: "User", audioData: nil, audioDuration: 0)
             }
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             var responseContent = "responseContent /n responseContent"
-            let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent)
+            let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent, type: "text")
             self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
             guard let id = self.roomId else {return}
-            self.storage.saveMessages(responseContent, id, "ChatGPt")
+            self.storage.saveMessages(messages: responseContent, roomId: id, senderType: "ChatGPt", audioData: nil, audioDuration: 0)
             self.sendMessageBt.isHidden = true
             self.textHeight.constant = 40
             self.messageTextView.text = ""
@@ -342,16 +342,17 @@ extension ChatView: EditOnMessageAction {
 //MARK: - Networking -
 extension ChatView: VoiceNoteDelegate {
     func updateWithVoiceNote(record: Data, duration: Double) {
-        request.sendAudioFileToOpenAI2(audioData: record, model: "whisper-1", apiKey: apiKey ?? "") { result in
-            switch result {
-            case .success(let transcriptionResponse):
-                // Handle success
-                print("Transcription Response: \(transcriptionResponse)")
-            case .failure(let error):
-                // Handle failure
-                print("Error: \(error)")
-            }
-        }
+        self.storage.saveMessages(messages: nil, roomId: self.roomId!, senderType: "User", audioData: record, audioDuration: duration)
+//        request.sendAudioFileToOpenAI2(audioData: record, model: "whisper-1", apiKey: apiKey ?? "") { result in
+//            switch result {
+//            case .success(let transcriptionResponse):
+//                // Handle success
+//                print("Transcription Response: \(transcriptionResponse)")
+//            case .failure(let error):
+//                // Handle failure
+//                print("Error: \(error)")
+//            }
+//        }
     }
     
     

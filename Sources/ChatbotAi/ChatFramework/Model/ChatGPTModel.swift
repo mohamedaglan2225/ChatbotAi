@@ -38,6 +38,7 @@ public struct Choice: Decodable {
 public struct ChatMessage: Decodable {
     var role: String?
     var content: String?
+    var type: String?
 }
 
 public struct Usage: Codable {
