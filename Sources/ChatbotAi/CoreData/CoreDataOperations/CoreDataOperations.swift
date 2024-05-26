@@ -42,7 +42,9 @@ public class DefaultMessageStorage: MessagesStorage {
         let objects = coreDataWrapper.fetchObjects(ofType: MessageModel.self, predicate: predicate)
         return objects.map {
             Choice(
-                message: ChatMessage(role: $0.senderType, content: $0.content)
+                message: ChatMessage(role: $0.senderType, content: $0.content),
+                audioData: $0.audioData,
+                audioDuration: $0.audioDuration
             )
         }
     }

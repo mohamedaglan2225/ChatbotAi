@@ -104,6 +104,17 @@ public class SoundPlayer {
     
 }
 
+struct SoundItems {
+    var data: Data
+    var duration: Double
+    var currentTime: Double
+
+//    func getLocalURL() -> URL? {
+//        // Logic to write data to a temporary file and return the URL
+//        // This depends on how you handle audio data (e.g., saving to disk vs. playing directly from data)
+//    }
+}
+
 class SoundItem {
     
     enum Status {

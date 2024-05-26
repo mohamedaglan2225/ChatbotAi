@@ -43,6 +43,12 @@ class MessageVoiceTableCell: UITableViewCell {
         isSender ? configureMyCell() : configureOtherCell()
     }
     
+    func configuration(message: Message, isSender: Bool) {
+        self.message = message
+        isSender ? configureMyCell() : configureOtherCell()
+        updateUIForAudio(message: message)
+    }
+    
     // MARK: - IBOutlets -
     @IBAction private func playButtonWasPressed(_ sender: UIButton) {
         guard let url = self.message?.soundItem?.getLocalURL() else {return}
@@ -77,6 +83,14 @@ class MessageVoiceTableCell: UITableViewCell {
 // MARK: - Helper Funcitons -
 
 extension MessageVoiceTableCell {
+    
+    private func updateUIForAudio(message: Message) {
+        guard let soundItem = message.soundItem, let localURL = soundItem.getLocalURL() else { return }
+        let totalDuration = getDuration(from: localURL)
+        voiceSlider.maximumValue = Float(totalDuration)
+        voiceSlider.value = Float(soundItem.currentTime ?? 0.0)
+        durationLabel.text = durationToString(totalDuration)
+    }
     
     private func configureMyCell() {
         mainVStackView.alignment = .leading

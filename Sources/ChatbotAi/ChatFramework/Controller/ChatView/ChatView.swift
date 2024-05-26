@@ -51,7 +51,6 @@ class ChatView: UIViewController {
     
     
     
-    
     //MARK: - LifeCycle Events -
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -196,14 +195,22 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if chatModel[indexPath.row].message?.role == "User" {
+        let choice = chatModel[indexPath.row]
+        if let audioData = choice.audioData, let audioDuration = choice.audioDuration {
+              if let voiceCell = tableView.dequeueReusableCell(withIdentifier: "MessageVoiceTableCell", for: indexPath) as? MessageVoiceTableCell {
+                  
+                  return voiceCell
+              }
+          }
+        // Handle text messages
+        if choice.message?.role == "User" {
             if let senderCell = tableView.dequeueReusableCell(withIdentifier: "SenderTextCell", for: indexPath) as? SenderTextCell {
-                senderCell.configureCell(model: chatModel[indexPath.row])
+                senderCell.configureCell(model: choice)
                 return senderCell
             }
-        }else {
+        } else {
             if let receiverCell = tableView.dequeueReusableCell(withIdentifier: "ReceiverTextCell", for: indexPath) as? ReceiverTextCell {
-                receiverCell.configureCell(model: chatModel[indexPath.row])
+                receiverCell.configureCell(model: choice)
                 receiverCell.dropDownMenueClosure = { [weak self] in
                     guard let self = self else {return}
                     let vc = EditOnMessagesController()
@@ -213,8 +220,33 @@ extension ChatView: UITableViewDataSource, UITableViewDelegate {
                 return receiverCell
             }
         }
+
         return UITableViewCell()
     }
+
+    
+//    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        
+//        if chatModel[indexPath.row].message?.role == "User" {
+//            
+//            if let senderCell = tableView.dequeueReusableCell(withIdentifier: "SenderTextCell", for: indexPath) as? SenderTextCell {
+//                senderCell.configureCell(model: chatModel[indexPath.row])
+//                return senderCell
+//            }
+//        }else {
+//            if let receiverCell = tableView.dequeueReusableCell(withIdentifier: "ReceiverTextCell", for: indexPath) as? ReceiverTextCell {
+//                receiverCell.configureCell(model: chatModel[indexPath.row])
+//                receiverCell.dropDownMenueClosure = { [weak self] in
+//                    guard let self = self else {return}
+//                    let vc = EditOnMessagesController()
+//                    vc.delegate = self
+//                    self.present(vc, animated: true)
+//                }
+//                return receiverCell
+//            }
+//        }
+//        return UITableViewCell()
+//    }
 }
 
 //MARK: - Handle Actions -
@@ -342,12 +374,18 @@ extension ChatView: EditOnMessageAction {
 //MARK: - Networking -
 extension ChatView: VoiceNoteDelegate {
     func updateWithVoiceNote(record: Data, duration: Double) {
-        self.storage.saveMessages(messages: nil, roomId: self.roomId!, senderType: "User", audioData: record, audioDuration: duration)
-//        request.sendAudioFileToOpenAI2(audioData: record, model: "whisper-1", apiKey: apiKey ?? "") { result in
-//            switch result {
-//            case .success(let transcriptionResponse):
-//                // Handle success
-//                print("Transcription Response: \(transcriptionResponse)")
+//        self.storage.saveMessages(messages: nil, roomId: self.roomId!, senderType: "User", audioData: record, audioDuration: duration)
+        do {
+            self.storage.saveMessages(messages: nil, roomId: self.roomId!, senderType: "User", audioData: record, audioDuration: duration)
+        } catch {
+            // Handle errors, perhaps show an alert to the user
+            print("Failed to save the voice note: \(error)")
+        }
+        //        request.sendAudioFileToOpenAI2(audioData: record, model: "whisper-1", apiKey: apiKey ?? "") { result in
+        //            switch result {
+        //            case .success(let transcriptionResponse):
+        //                // Handle success
+        //                print("Transcription Response: \(transcriptionResponse)")
 //            case .failure(let error):
 //                // Handle failure
 //                print("Error: \(error)")

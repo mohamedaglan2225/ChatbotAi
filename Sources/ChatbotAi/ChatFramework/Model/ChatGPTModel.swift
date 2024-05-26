@@ -28,7 +28,9 @@ public struct Choice: Decodable {
     var message: ChatMessage?
     var logprobs: String?
     var finishReason: String?
-
+    var audioData: Data?
+    var audioDuration: Double?
+    
     enum CodingKeys: String, CodingKey {
         case index, message, logprobs
         case finishReason = "finish_reason"
