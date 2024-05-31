@@ -433,7 +433,9 @@ struct MultipartPostRequest: NetworkRequest {
     var url: URL { URL(string: "https://api.openai.com/v1/audio/transcriptions")! }
     var method: String { "POST" }
     var headers: [String: String]? {
-        ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
+        ["Content-Type": "multipart/form-data; boundary=\(boundary)",
+         "Authorization": "Bearer \(ChatBotAI.apiKey)"
+        ]
     }
     var body: Data? {
         var body = Data()
