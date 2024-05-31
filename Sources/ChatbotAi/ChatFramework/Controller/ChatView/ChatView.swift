@@ -255,9 +255,16 @@ extension ChatView {
     private func sendTextMessage() {
         if let message = messageTextView.text {
             let sentMessage = ChatMessage(role: "User", content: message, type: "text")
+            
+            let chatGPTMessage = ChatMessage(role: "ChatGPt", content: nil, type: "text")
+            
+            
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 self.chatModel.insert(Choice(index: 0, message: sentMessage, logprobs: "", finishReason: ""), at: 0)
+                
+//                self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
+                
                 guard let id = roomId else {return}
                 self.storage.saveMessages(messages: message, roomId: id, senderType: "User", audioData: nil, audioDuration: 0)
             }
@@ -266,7 +273,9 @@ extension ChatView {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             var responseContent = "responseContent /n responseContent"
             let chatGPTMessage = ChatMessage(role: "ChatGPt", content: responseContent, type: "text")
-            self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
+//            self.chatModel[0].message = chatGPTMessage
+            
+//            self.chatModel.insert(Choice(index: 0, message: chatGPTMessage, logprobs: "", finishReason: ""), at: 0)
             guard let id = self.roomId else {return}
             self.storage.saveMessages(messages: responseContent, roomId: id, senderType: "ChatGPt", audioData: nil, audioDuration: 0)
             self.sendMessageBt.isHidden = true
@@ -376,7 +385,8 @@ extension ChatView: VoiceNoteDelegate {
     func updateWithVoiceNote(record: Data, duration: Double) {
 //        self.storage.saveMessages(messages: nil, roomId: self.roomId!, senderType: "User", audioData: record, audioDuration: duration)
         do {
-            self.storage.saveMessages(messages: nil, roomId: self.roomId!, senderType: "User", audioData: record, audioDuration: duration)
+//            self.storage.saveMessages(messages: nil, roomId: self.roomId!, senderType: "User", audioData: record, audioDuration: duration)
+            uploadAudioFile(audioData: record)
         } catch {
             // Handle errors, perhaps show an alert to the user
             print("Failed to save the voice note: \(error)")
@@ -393,5 +403,65 @@ extension ChatView: VoiceNoteDelegate {
 //        }
     }
     
+    func uploadAudioFile(audioData: Data) {
+        let boundary = "Boundary-\(UUID().uuidString)"
+        let request = MultipartPostRequest(audioData: audioData, modelName: "whisper", boundary: boundary)
+        let networkManager = NetworkManager()
+        networkManager.performRequest(request, decodingType: UploadResponse.self) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let uploadResponse):
+                    print("Upload successful: \(uploadResponse)")
+                    // Update UI or perform further actions
+                case .failure(let error):
+                    print("Failed to upload: \(error)")
+                    // Handle errors, update UI
+                }
+            }
+        }
+    }
+
     
+    
+}
+
+
+struct MultipartPostRequest: NetworkRequest {
+    var audioData: Data
+    var modelName: String
+    let boundary: String
+    var url: URL { URL(string: "https://api.openai.com/v1/audio/transcriptions")! }
+    var method: String { "POST" }
+    var headers: [String: String]? {
+        ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
+    }
+    var body: Data? {
+        var body = Data()
+
+        // Append audio data
+        body.append("--\(boundary)\r\n")
+        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"audio.wav\"\r\n")
+        body.append("Content-Type: audio/wav\r\n\r\n") // Assuming the audio file type is WAV
+        body.append(audioData)
+        body.append("\r\n")
+
+        // Append text field for the model
+        body.append("--\(boundary)\r\n")
+        body.append("Content-Disposition: form-data; name=\"model\"\r\n\r\n")
+        body.append(modelName)
+        body.append("\r\n")
+
+        // Close the body with the boundary
+        body.append("--\(boundary)--\r\n")
+        return body
+    }
+    var queryParameters: [String: String]? { nil }
+}
+
+
+
+
+struct UploadResponse: Decodable {
+    let success: Bool
+    let message: String?
 }

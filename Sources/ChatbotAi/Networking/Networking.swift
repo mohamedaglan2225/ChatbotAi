@@ -142,57 +142,6 @@ public class Networking {
         task.resume()
     }
     
-    
-    func sendAudioFileToOpenAI2(audioData: Data, model: String, apiKey: String, completion: @escaping (Result<TranscriptionResponse, Error>) -> Void) {
-        let urlString = "https://api.openai.com/v1/audio/transcriptions"
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NetworkError.invalidURL))
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-
-        let boundary = "Boundary-\(UUID().uuidString)"
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-
-        var body = Data()
-
-        // Append the audio data
-        body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"audio.wav\"\r\n".data(using: .utf8)!)
-        body.append("Content-Type: audio/wav\r\n\r\n".data(using: .utf8)!)
-        body.append(audioData)
-        body.append("\r\n".data(using: .utf8)!)
-
-        // Append the model parameter
-        body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"model\"\r\n\r\n".data(using: .utf8)!)
-        body.append("\(model)\r\n".data(using: .utf8)!)
-
-        // Close boundary
-        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-
-        request.httpBody = body
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(.failure(error ?? NetworkError.unknown))
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                let transcriptionResponse = try decoder.decode(TranscriptionResponse.self, from: data)
-                completion(.success(transcriptionResponse))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        task.resume()
-    }
-    
 }
 
 private func printApiResponse(_ responseData: Data?) {
