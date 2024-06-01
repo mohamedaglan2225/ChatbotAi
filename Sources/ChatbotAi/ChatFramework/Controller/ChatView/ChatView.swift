@@ -441,20 +441,20 @@ struct MultipartPostRequest: NetworkRequest {
         var body = Data()
 
         // Append audio data
-          body.append("--\(boundary)\r\n")
-          body.append("Content-Disposition: form-data; name=\"file\"; filename=\"audio.mp3\"\r\n")
-          body.append("Content-Type: audio/mpeg\r\n\r\n")  // Make sure this matches the actual file type
-          body.append(audioData)
-          body.append("\r\n")
+        body.append("--\(boundary)\r\n")
+        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"audio.wav\"\r\n")
+        body.append("Content-Type: audio/wav\r\n\r\n") // Assuming the audio file type is WAV
+        body.append(audioData)
+        body.append("\r\n")
 
-          // Append text field for the model
-          body.append("--\(boundary)\r\n")
-          body.append("Content-Disposition: form-data; name=\"model\"\r\n\r\n")
-          body.append(modelName.data(using: .utf8)!)
-          body.append("\r\n")
+        // Append text field for the model
+        body.append("--\(boundary)\r\n")
+        body.append("Content-Disposition: form-data; name=\"model\"\r\n\r\n")
+        body.append(modelName)
+        body.append("\r\n")
 
-          // Close the body with the boundary
-          body.append("--\(boundary)--\r\n")
+        // Close the body with the boundary
+        body.append("--\(boundary)--\r\n")
         return body
     }
     var queryParameters: [String: String]? { nil }
