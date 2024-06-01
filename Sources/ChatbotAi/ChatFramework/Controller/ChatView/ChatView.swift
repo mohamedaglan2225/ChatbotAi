@@ -440,21 +440,25 @@ struct MultipartPostRequest: NetworkRequest {
     var body: Data? {
         var body = Data()
 
-        // Append audio data
-        body.append("--\(boundary)\r\n")
-        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"audio.wav\"\r\n")
-        body.append("Content-Type: audio/wav\r\n\r\n") // Assuming the audio file type is WAV
-        body.append(audioData)
-        body.append("\r\n")
+        // Properly encode the boundary and parts
+        let boundaryPrefix = "--\(boundary)\r\n"
+        let boundarySuffix = "\r\n"
 
-        // Append text field for the model
-        body.append("--\(boundary)\r\n")
-        body.append("Content-Disposition: form-data; name=\"model\"\r\n\r\n")
-        body.append(modelName)
-        body.append("\r\n")
+        // Append audio data
+        body.append(Data(boundaryPrefix.utf8))
+        body.append(Data("Content-Disposition: form-data; name=\"file\"; filename=\"audio.wav\"\r\n".utf8))
+        body.append(Data("Content-Type: audio/wav\r\n\r\n".utf8))
+        body.append(audioData)
+        body.append(Data(boundarySuffix.utf8))
+
+        // Append model name
+        body.append(Data(boundaryPrefix.utf8))
+        body.append(Data("Content-Disposition: form-data; name=\"model\"\r\n\r\n".utf8))
+        body.append(Data(modelName.utf8))
+        body.append(Data(boundarySuffix.utf8))
 
         // Close the body with the boundary
-        body.append("--\(boundary)--\r\n")
+        body.append(Data("--\(boundary)--\r\n".utf8))
         return body
     }
     var queryParameters: [String: String]? { nil }
