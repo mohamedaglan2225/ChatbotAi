@@ -428,7 +428,7 @@ extension ChatView: VoiceNoteDelegate {
 
 struct MultipartPostRequest: NetworkRequest {
     var audioData: Data
-    var modelName: String
+    var modelName: String = "whisper-1"
     let boundary: String
     var url: URL { URL(string: "https://api.openai.com/v1/audio/transcriptions")! }
     var method: String { "POST" }
@@ -442,7 +442,7 @@ struct MultipartPostRequest: NetworkRequest {
 
         // Append audio data
         body.append("--\(boundary)\r\n")
-        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"audio.wav\"\r\n")
+        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"audio.mp3\"\r\n")
         body.append("Content-Type: audio/wav\r\n\r\n") // Assuming the audio file type is WAV
         body.append(audioData)
         body.append("\r\n")
