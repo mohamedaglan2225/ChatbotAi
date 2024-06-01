@@ -405,7 +405,7 @@ extension ChatView: VoiceNoteDelegate {
     
     func uploadAudioFile(audioData: Data) {
         let boundary = "Boundary-\(UUID().uuidString)"
-        let request = MultipartPostRequest(audioData: audioData, modelName: "whisper", boundary: boundary)
+        let request = MultipartPostRequest(audioData: audioData, modelName: "whisper-1", boundary: boundary)
         let networkManager = NetworkManager()
         networkManager.performRequest(request, decodingType: UploadResponse.self) { result in
             DispatchQueue.main.async {
